@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package product;
+option go_package = "github.com/winc-link/iot-cloud-proto/product";
+
+
+message QueryProductListRequest{
+  map<string, string> extra =1;
+}
+
+message QueryProductListResponse {
+  message Productinfo {
+    uint64 CreateAt = 1; //创建时间
+    string ProductId = 2; //产品id
+    string ProductName = 3;//产品名称
+    string Description = 4;//描述
+    uint32 NodeType = 5;//产品的节点类型 0设备，1网关
+    uint32 DataFormat = 6;//上报数据的格式
+    uint32 DeviceCount = 7;//设备数量
+    map<string, string> extra =8;
+
+  }
+  message List {
+    repeated Productinfo ProductInfo = 1;
+  }
+  message Data {
+    uint32 Total = 4;
+    List List = 5;
+  }
+  Data data = 1;
+  string RequestId = 2;
+  string Code = 3;
+  bool Success = 4;
+  string errorMessage = 5;
+  string Platform = 6; //平台名称
+}
+
+
+
+service RpcProduct {
+  //查询所有产品
+  rpc QueryProductList(QueryProductListRequest) returns (QueryProductListResponse) {}
+}
