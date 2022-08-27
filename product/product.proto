@@ -8,17 +8,22 @@ message QueryProductListRequest{
   map<string, string> extra =1;
 }
 
+enum ProductNodeType {
+  GATEWAY = 0;
+  Device = 1;
+  Other = 2;
+}
+
 message QueryProductListResponse {
   message Productinfo {
     uint64 CreateAt = 1; //创建时间
     string ProductId = 2; //产品id
     string ProductName = 3;//产品名称
     string Description = 4;//描述
-    uint32 NodeType = 5;//产品的节点类型 0设备，1网关
-    uint32 DataFormat = 6;//上报数据的格式
-    uint32 DeviceCount = 7;//设备数量
-    string Platform = 8; //平台名称
-    map<string, string> extra =9;
+    ProductNodeType NodeType = 5;//产品的节点类型 0设备，1网关
+    string DataFormat = 6;//上报数据的格式
+    string Platform = 7; //平台名称
+    map<string, string> extra = 8;
 
   }
   message List {
