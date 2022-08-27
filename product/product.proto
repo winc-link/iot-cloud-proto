@@ -17,7 +17,8 @@ message QueryProductListResponse {
     uint32 NodeType = 5;//产品的节点类型 0设备，1网关
     uint32 DataFormat = 6;//上报数据的格式
     uint32 DeviceCount = 7;//设备数量
-    map<string, string> extra =8;
+    string Platform = 8; //平台名称
+    map<string, string> extra =9;
 
   }
   message List {
@@ -32,7 +33,6 @@ message QueryProductListResponse {
   string Code = 3;
   bool Success = 4;
   string errorMessage = 5;
-  string Platform = 6; //平台名称
 }
 
 
