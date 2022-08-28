@@ -23,7 +23,9 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RpcProductClient interface {
 	//查询所有产品
-	QueryProductList(ctx context.Context, in *QueryProductListRequest, opts ...grpc.CallOption) (*QueryProductListResponse, error)
+	QueryProductList(ctx context.Context, in *QueryProductListRequest, opts ...grpc.CallOption) (*QueryProductResponse, error)
+	//查询单个产品
+	QueryProduct(ctx context.Context, in *QueryProductRequest, opts ...grpc.CallOption) (*QueryProductResponse, error)
 }
 
 type rpcProductClient struct {
@@ -34,9 +36,18 @@ func NewRpcProductClient(cc grpc.ClientConnInterface) RpcProductClient {
 	return &rpcProductClient{cc}
 }
 
-func (c *rpcProductClient) QueryProductList(ctx context.Context, in *QueryProductListRequest, opts ...grpc.CallOption) (*QueryProductListResponse, error) {
-	out := new(QueryProductListResponse)
+func (c *rpcProductClient) QueryProductList(ctx context.Context, in *QueryProductListRequest, opts ...grpc.CallOption) (*QueryProductResponse, error) {
+	out := new(QueryProductResponse)
 	err := c.cc.Invoke(ctx, "/product.RpcProduct/QueryProductList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *rpcProductClient) QueryProduct(ctx context.Context, in *QueryProductRequest, opts ...grpc.CallOption) (*QueryProductResponse, error) {
+	out := new(QueryProductResponse)
+	err := c.cc.Invoke(ctx, "/product.RpcProduct/QueryProduct", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +59,9 @@ func (c *rpcProductClient) QueryProductList(ctx context.Context, in *QueryProduc
 // for forward compatibility
 type RpcProductServer interface {
 	//查询所有产品
-	QueryProductList(context.Context, *QueryProductListRequest) (*QueryProductListResponse, error)
+	QueryProductList(context.Context, *QueryProductListRequest) (*QueryProductResponse, error)
+	//查询单个产品
+	QueryProduct(context.Context, *QueryProductRequest) (*QueryProductResponse, error)
 	mustEmbedUnimplementedRpcProductServer()
 }
 
@@ -56,8 +69,11 @@ type RpcProductServer interface {
 type UnimplementedRpcProductServer struct {
 }
 
-func (UnimplementedRpcProductServer) QueryProductList(context.Context, *QueryProductListRequest) (*QueryProductListResponse, error) {
+func (UnimplementedRpcProductServer) QueryProductList(context.Context, *QueryProductListRequest) (*QueryProductResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryProductList not implemented")
+}
+func (UnimplementedRpcProductServer) QueryProduct(context.Context, *QueryProductRequest) (*QueryProductResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryProduct not implemented")
 }
 func (UnimplementedRpcProductServer) mustEmbedUnimplementedRpcProductServer() {}
 
@@ -90,6 +106,24 @@ func _RpcProduct_QueryProductList_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RpcProduct_QueryProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RpcProductServer).QueryProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/product.RpcProduct/QueryProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RpcProductServer).QueryProduct(ctx, req.(*QueryProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // RpcProduct_ServiceDesc is the grpc.ServiceDesc for RpcProduct service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -100,6 +134,10 @@ var RpcProduct_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "QueryProductList",
 			Handler:    _RpcProduct_QueryProductList_Handler,
+		},
+		{
+			MethodName: "QueryProduct",
+			Handler:    _RpcProduct_QueryProduct_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

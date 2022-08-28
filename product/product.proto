@@ -59,9 +59,32 @@ message QueryProductListResponse {
   string errorMessage = 5;
 }
 
+message QueryProductRequest {
+  string productId = 1;
+}
 
+message QueryProductResponse {
+  message Data {
+    uint64 CreateAt = 1; //创建时间
+    string ProductId = 2; //产品id
+    string ProductName = 3;//产品名称
+    string Description = 4;//描述
+    ProductNodeType NodeType = 5;//产品的节点类型
+    string DataFormat = 6;//上报数据的格式
+    ProductPlatform Platform = 7; //平台名称
+    ProductNetType NetType = 8;//联网方式
+    map<string, string> extra = 9;
+  }
+  Data data = 1;
+  string RequestId = 2;
+  string Code = 3;
+  bool Success = 4;
+  string errorMessage = 5;
+}
 
 service RpcProduct {
   //查询所有产品
-  rpc QueryProductList(QueryProductListRequest) returns (QueryProductListResponse) {}
+  rpc QueryProductList(QueryProductListRequest) returns (QueryProductResponse) {}
+  //查询单个产品
+  rpc QueryProduct(QueryProductRequest) returns (QueryProductResponse) {}
 }
