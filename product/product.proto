@@ -40,9 +40,9 @@ message QueryProductListResponse {
     string Description = 4;//描述
     ProductNodeType NodeType = 5;//产品的节点类型 0设备，1网关
     string DataFormat = 6;//上报数据的格式
-    string Platform = 7; //平台名称
-    map<string, string> extra = 8;
-
+    ProductPlatform Platform = 7; //平台名称
+    ProductNodeType NetType = 8;
+    map<string, string> extra = 9;
   }
   message List {
     repeated Productinfo ProductInfo = 1;
