@@ -9,9 +9,27 @@ message QueryProductListRequest{
 }
 
 enum ProductNodeType {
-  GATEWAY = 0;
-  Device = 1;
-  Other = 2;
+  UnKnow = 0; //未知类型
+  Gateway = 1; //网关
+  Device = 2;  //直连设备
+  SubDevice = 3; //网关子设备
+}
+
+enum ProductNetType {
+  Other = 0;
+  Cellular = 1;
+  Wifi = 2;
+  Ethernet = 3;
+  NB = 4;
+}
+
+enum ProductPlatform {
+  WinCLinkIot = 0;
+  AliIot = 1;
+  HuaweiIot = 2;
+  TencentIot = 3;
+  TuyaIot = 4;
+  OneNetIot = 5; //中国移动
 }
 
 message QueryProductListResponse {
