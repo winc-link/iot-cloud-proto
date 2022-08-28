@@ -38,10 +38,10 @@ message QueryProductListResponse {
     string ProductId = 2; //产品id
     string ProductName = 3;//产品名称
     string Description = 4;//描述
-    ProductNodeType NodeType = 5;//产品的节点类型 0设备，1网关
+    ProductNodeType NodeType = 5;//产品的节点类型
     string DataFormat = 6;//上报数据的格式
     ProductPlatform Platform = 7; //平台名称
-    ProductNodeType NetType = 8;
+    ProductNetType NetType = 8;//联网方式
     map<string, string> extra = 9;
   }
   message List {
