@@ -24,12 +24,13 @@ enum ProductNetType {
 }
 
 enum ProductPlatform {
-  WinCLinkIot = 0;
-  AliIot = 1;
-  HuaweiIot = 2;
-  TencentIot = 3;
-  TuyaIot = 4;
-  OneNetIot = 5; //中国移动
+  CustomerIot = 0;//用户自定义
+  WinCLinkIot = 1; //赢创万联
+  AliIot = 2; //阿里
+  HuaweiIot = 3;//华为
+  TencentIot = 4;//腾讯
+  TuyaIot = 5;//涂鸦
+  OneNetIot = 6; //中国移动
 }
 
 message QueryProductListResponse {
