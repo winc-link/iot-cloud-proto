@@ -3,6 +3,7 @@ syntax = "proto3";
 package product;
 option go_package = "github.com/winc-link/iot-cloud-proto/product";
 
+import "google/protobuf/any.proto";
 
 message QueryProductListRequest{
   map<string, string> extra =1;
@@ -63,6 +64,55 @@ message QueryProductRequest {
   string productId = 1;
 }
 
+
+message Datatype {
+  string type = 1;
+  google.protobuf.Any specs = 2;
+}
+
+message Properties {
+  string identifier = 1;
+  string name = 2;
+  string accessMode = 3;
+  string desc = 4;
+  bool required = 5;
+  Datatype dataType = 6;
+}
+
+
+// events
+message Events {
+  string identifier = 1;
+  string name = 2;
+  string type = 3;
+  bool required = 4;
+  string desc = 5;
+  string method = 6;
+  repeated Outputdata outputData = 7;
+}
+
+message Outputdata {
+  string identifier = 1;
+  string name = 2;
+  Datatype1 dataType = 3;
+}
+
+message Datatype1 {
+  string type = 1;
+  google.protobuf.Any specs = 2;
+}
+
+message Services {
+  string identifier = 1;
+  string name = 2;
+  bool required = 3;
+  string callType = 4;
+  string desc = 5;
+  string method = 6;
+//  repeated Inputdata inputData = 7;
+  repeated google.protobuf.Any outputData = 8;
+}
+
 message QueryProductResponse {
   message Data {
     uint64 CreateAt = 1; //创建时间
@@ -73,7 +123,11 @@ message QueryProductResponse {
     string DataFormat = 6;//上报数据的格式
     ProductPlatform Platform = 7; //平台名称
     ProductNetType NetType = 8;//联网方式
-    map<string, string> extra = 9;
+    repeated Properties properties = 9;//属性
+    repeated Events events = 10;//事件
+    repeated Services services = 11;
+
+    map<string, string> extra = 12;
   }
   Data data = 1;
   string RequestId = 2;

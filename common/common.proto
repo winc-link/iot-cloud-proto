@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option go_package = "github.com/winc-link/iot-cloud-proto/common";
+
+import "google/protobuf/empty.proto";
+
+package common;
+
+// pong
+message Pong {
+  string timestamp = 2;
+}
+
+// version
+message VersionResponse {
+  string version = 2;
+}
+
+message VersionSdkResponse {
+  string sdk_version = 2;
+}
+
+message CommonResponse {
+  string RequestId = 1;
+  string errorMessage = 2;
+  string Code = 3;
+  bool Success = 4;
+}
+
+// SDK使用
+service Common {
+  // Ping tests whether the service is working
+  rpc Ping(google.protobuf.Empty) returns (Pong) {}
+  // Version obtains version information from the target service.
+  rpc Version(google.protobuf.Empty) returns (VersionResponse) {}
+}

@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package device;
+option go_package = "github.com/winc-link/iot-cloud-proto/device";
+import "common/common.proto";
+import "google/protobuf/timestamp.proto";
+
+message ConnectIotCloudRequest {
+  string deviceId = 1;
+  map<string, string> extra =2;
+}
+
+message QueryDeviceDetailRequest {
+  string deviceId = 1;
+}
+
+message QueryDeviceDetailResponse {
+  message Data {
+    string Status = 1;
+    string ProductName = 3;
+    google.protobuf.Timestamp UtcOnline = 5;
+    string IotId = 6;
+    string GmtCreate = 7;
+    google.protobuf.Timestamp UtcCreate = 8;
+    google.protobuf.Timestamp UtcActive = 9;
+    string GmtActive = 10;
+    uint32 NodeType = 11;
+    string Region = 12;
+    string IpAddress = 13;
+    string GmtOnline = 14;
+    string ProductKey = 15;
+    string DeviceName = 16;
+    string Nickname = 17;
+  }
+
+  Data data = 1;
+  string RequestId = 2;
+  string Code = 3;
+  bool Success = 4;
+  string errorMessage = 5;
+}
+
+message GetDeviceStatusRequest {
+  string deviceId = 1;
+}
+
+
+message GetDeviceStatusResponse {
+  message Data {
+    string Status = 1;
+    uint64 Timestamp = 2;
+  }
+
+  Data data = 1;
+  string RequestId = 2;
+  string Code = 3;
+  bool Success = 4;
+  string errorMessage = 5;
+}
+
+service RpcDevice {
+  //连接云服务
+  rpc ConnectIotCloud(ConnectIotCloudRequest) returns (common.CommonResponse) {}
+  // 查询指定设备的详细信息
+  rpc QueryDeviceDetail(QueryDeviceDetailRequest) returns (QueryDeviceDetailResponse) {}
+  // 查询设备状态
+  rpc GetDeviceStatus (GetDeviceStatusRequest) returns(GetDeviceStatusResponse){}
+  // 查询指定产品下的所有设备列表
+//  rpc QueryDeviceByProduct (QueryDeviceByProductRequest) returns (QueryDeviceByProductResponse){}
+  // 添加设备
+
+  // 激活设备
+
+
+}
