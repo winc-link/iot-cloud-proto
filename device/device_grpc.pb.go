@@ -29,6 +29,10 @@ type RpcDeviceClient interface {
 	QueryDeviceDetail(ctx context.Context, in *QueryDeviceDetailRequest, opts ...grpc.CallOption) (*QueryDeviceDetailResponse, error)
 	// 查询设备状态
 	GetDeviceStatus(ctx context.Context, in *GetDeviceStatusRequest, opts ...grpc.CallOption) (*GetDeviceStatusResponse, error)
+	// 查询指定产品下的所有设备列表
+	//  rpc QueryDeviceByProduct (QueryDeviceByProductRequest) returns (QueryDeviceByProductResponse){}
+	// 添加设备
+	RegisterDevice(ctx context.Context, in *RegisterDeviceRequest, opts ...grpc.CallOption) (*RegisterDeviceResponse, error)
 }
 
 type rpcDeviceClient struct {
@@ -66,6 +70,15 @@ func (c *rpcDeviceClient) GetDeviceStatus(ctx context.Context, in *GetDeviceStat
 	return out, nil
 }
 
+func (c *rpcDeviceClient) RegisterDevice(ctx context.Context, in *RegisterDeviceRequest, opts ...grpc.CallOption) (*RegisterDeviceResponse, error) {
+	out := new(RegisterDeviceResponse)
+	err := c.cc.Invoke(ctx, "/device.RpcDevice/RegisterDevice", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RpcDeviceServer is the server API for RpcDevice service.
 // All implementations must embed UnimplementedRpcDeviceServer
 // for forward compatibility
@@ -76,6 +89,10 @@ type RpcDeviceServer interface {
 	QueryDeviceDetail(context.Context, *QueryDeviceDetailRequest) (*QueryDeviceDetailResponse, error)
 	// 查询设备状态
 	GetDeviceStatus(context.Context, *GetDeviceStatusRequest) (*GetDeviceStatusResponse, error)
+	// 查询指定产品下的所有设备列表
+	//  rpc QueryDeviceByProduct (QueryDeviceByProductRequest) returns (QueryDeviceByProductResponse){}
+	// 添加设备
+	RegisterDevice(context.Context, *RegisterDeviceRequest) (*RegisterDeviceResponse, error)
 	mustEmbedUnimplementedRpcDeviceServer()
 }
 
@@ -91,6 +108,9 @@ func (UnimplementedRpcDeviceServer) QueryDeviceDetail(context.Context, *QueryDev
 }
 func (UnimplementedRpcDeviceServer) GetDeviceStatus(context.Context, *GetDeviceStatusRequest) (*GetDeviceStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDeviceStatus not implemented")
+}
+func (UnimplementedRpcDeviceServer) RegisterDevice(context.Context, *RegisterDeviceRequest) (*RegisterDeviceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegisterDevice not implemented")
 }
 func (UnimplementedRpcDeviceServer) mustEmbedUnimplementedRpcDeviceServer() {}
 
@@ -159,6 +179,24 @@ func _RpcDevice_GetDeviceStatus_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RpcDevice_RegisterDevice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterDeviceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RpcDeviceServer).RegisterDevice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/device.RpcDevice/RegisterDevice",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RpcDeviceServer).RegisterDevice(ctx, req.(*RegisterDeviceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // RpcDevice_ServiceDesc is the grpc.ServiceDesc for RpcDevice service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -177,6 +215,10 @@ var RpcDevice_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetDeviceStatus",
 			Handler:    _RpcDevice_GetDeviceStatus_Handler,
+		},
+		{
+			MethodName: "RegisterDevice",
+			Handler:    _RpcDevice_RegisterDevice_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
