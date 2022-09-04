@@ -126,7 +126,6 @@ message QueryProductResponse {
     repeated Properties properties = 9;//属性
     repeated Events events = 10;//事件
     repeated Services services = 11;
-
     map<string, string> extra = 12;
   }
   Data data = 1;

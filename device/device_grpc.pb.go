@@ -27,10 +27,10 @@ type RpcDeviceClient interface {
 	ConnectIotCloud(ctx context.Context, in *ConnectIotCloudRequest, opts ...grpc.CallOption) (*common.CommonResponse, error)
 	// 查询指定设备的详细信息
 	QueryDeviceDetail(ctx context.Context, in *QueryDeviceDetailRequest, opts ...grpc.CallOption) (*QueryDeviceDetailResponse, error)
+	//查询所有设备
+	QueryDeviceList(ctx context.Context, in *QueryDeviceListRequest, opts ...grpc.CallOption) (*QueryDeviceListResponse, error)
 	// 查询设备状态
 	GetDeviceStatus(ctx context.Context, in *GetDeviceStatusRequest, opts ...grpc.CallOption) (*GetDeviceStatusResponse, error)
-	// 查询指定产品下的所有设备列表
-	//  rpc QueryDeviceByProduct (QueryDeviceByProductRequest) returns (QueryDeviceByProductResponse){}
 	// 添加设备
 	RegisterDevice(ctx context.Context, in *RegisterDeviceRequest, opts ...grpc.CallOption) (*RegisterDeviceResponse, error)
 }
@@ -55,6 +55,15 @@ func (c *rpcDeviceClient) ConnectIotCloud(ctx context.Context, in *ConnectIotClo
 func (c *rpcDeviceClient) QueryDeviceDetail(ctx context.Context, in *QueryDeviceDetailRequest, opts ...grpc.CallOption) (*QueryDeviceDetailResponse, error) {
 	out := new(QueryDeviceDetailResponse)
 	err := c.cc.Invoke(ctx, "/device.RpcDevice/QueryDeviceDetail", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *rpcDeviceClient) QueryDeviceList(ctx context.Context, in *QueryDeviceListRequest, opts ...grpc.CallOption) (*QueryDeviceListResponse, error) {
+	out := new(QueryDeviceListResponse)
+	err := c.cc.Invoke(ctx, "/device.RpcDevice/QueryDeviceList", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -87,10 +96,10 @@ type RpcDeviceServer interface {
 	ConnectIotCloud(context.Context, *ConnectIotCloudRequest) (*common.CommonResponse, error)
 	// 查询指定设备的详细信息
 	QueryDeviceDetail(context.Context, *QueryDeviceDetailRequest) (*QueryDeviceDetailResponse, error)
+	//查询所有设备
+	QueryDeviceList(context.Context, *QueryDeviceListRequest) (*QueryDeviceListResponse, error)
 	// 查询设备状态
 	GetDeviceStatus(context.Context, *GetDeviceStatusRequest) (*GetDeviceStatusResponse, error)
-	// 查询指定产品下的所有设备列表
-	//  rpc QueryDeviceByProduct (QueryDeviceByProductRequest) returns (QueryDeviceByProductResponse){}
 	// 添加设备
 	RegisterDevice(context.Context, *RegisterDeviceRequest) (*RegisterDeviceResponse, error)
 	mustEmbedUnimplementedRpcDeviceServer()
@@ -105,6 +114,9 @@ func (UnimplementedRpcDeviceServer) ConnectIotCloud(context.Context, *ConnectIot
 }
 func (UnimplementedRpcDeviceServer) QueryDeviceDetail(context.Context, *QueryDeviceDetailRequest) (*QueryDeviceDetailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryDeviceDetail not implemented")
+}
+func (UnimplementedRpcDeviceServer) QueryDeviceList(context.Context, *QueryDeviceListRequest) (*QueryDeviceListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryDeviceList not implemented")
 }
 func (UnimplementedRpcDeviceServer) GetDeviceStatus(context.Context, *GetDeviceStatusRequest) (*GetDeviceStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDeviceStatus not implemented")
@@ -161,6 +173,24 @@ func _RpcDevice_QueryDeviceDetail_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RpcDevice_QueryDeviceList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryDeviceListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RpcDeviceServer).QueryDeviceList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/device.RpcDevice/QueryDeviceList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RpcDeviceServer).QueryDeviceList(ctx, req.(*QueryDeviceListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _RpcDevice_GetDeviceStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetDeviceStatusRequest)
 	if err := dec(in); err != nil {
@@ -211,6 +241,10 @@ var RpcDevice_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "QueryDeviceDetail",
 			Handler:    _RpcDevice_QueryDeviceDetail_Handler,
+		},
+		{
+			MethodName: "QueryDeviceList",
+			Handler:    _RpcDevice_QueryDeviceList_Handler,
 		},
 		{
 			MethodName: "GetDeviceStatus",

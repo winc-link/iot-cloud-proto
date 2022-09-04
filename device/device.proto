@@ -18,22 +18,14 @@ message QueryDeviceDetailRequest {
 message QueryDeviceDetailResponse {
   message Data {
     string Status = 1;
-    string ProductName = 3;
-    google.protobuf.Timestamp UtcOnline = 5;
-    string IotId = 6;
-    string GmtCreate = 7;
-    google.protobuf.Timestamp UtcCreate = 8;
-    google.protobuf.Timestamp UtcActive = 9;
-    string GmtActive = 10;
-    uint32 NodeType = 11;
-    string Region = 12;
-    string IpAddress = 13;
-    string GmtOnline = 14;
-    string ProductKey = 15;
-    string DeviceName = 16;
-    string Nickname = 17;
+    string DeviceId = 2;
+    string DeviceName = 3;
+    string DeviceSecret = 4;
+    google.protobuf.Timestamp UtcCreate = 5;
+    string description = 6;
+    string NodeType = 7;
+    map<string, string> extra = 8;
   }
-
   Data data = 1;
   string RequestId = 2;
   string Code = 3;
@@ -71,18 +63,41 @@ message RegisterDeviceResponse {
   map<string, string> extra =3;
 }
 
+
+message QueryDeviceListRequest {
+  map<string, string> extra =1;
+}
+
+message QueryDeviceListResponse {
+  message Data {
+    string Status = 1;
+    string DeviceId = 2;
+    string DeviceName = 3;
+    string DeviceSecret = 4;
+    google.protobuf.Timestamp UtcCreate = 5;
+    string description = 6;
+    string NodeType = 7;
+    map<string, string> extra = 8;
+  }
+  Data data = 1;
+  string RequestId = 2;
+  string Code = 3;
+  bool Success = 4;
+  string errorMessage = 5;
+}
+
 service RpcDevice {
   //连接云服务
   rpc ConnectIotCloud(ConnectIotCloudRequest) returns (common.CommonResponse) {}
   // 查询指定设备的详细信息
   rpc QueryDeviceDetail(QueryDeviceDetailRequest) returns (QueryDeviceDetailResponse) {}
+  //查询所有设备
+  rpc QueryDeviceList(QueryDeviceListRequest) returns (QueryDeviceListResponse) {}
   // 查询设备状态
   rpc GetDeviceStatus (GetDeviceStatusRequest) returns(GetDeviceStatusResponse){}
-  // 查询指定产品下的所有设备列表
-  //  rpc QueryDeviceByProduct (QueryDeviceByProductRequest) returns (QueryDeviceByProductResponse){}
   // 添加设备
   rpc RegisterDevice (RegisterDeviceRequest) returns (RegisterDeviceResponse) {}
-  // 激活设备
-
+  // 删除设备
+//  rpc RegisterDevice (RegisterDeviceRequest) returns (RegisterDeviceResponse) {}
 
 }
