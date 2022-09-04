@@ -5,6 +5,13 @@ option go_package = "github.com/winc-link/iot-cloud-proto/device";
 import "common/common.proto";
 import "google/protobuf/timestamp.proto";
 
+
+enum DeviceNodeType {
+  UnKnow = 0; //未知类型
+  Gateway = 1; //网关
+  Device = 2;  //设备
+}
+
 message ConnectIotCloudRequest {
   string deviceId = 1;
   string driverId = 2;
@@ -23,7 +30,7 @@ message QueryDeviceDetailResponse {
     string DeviceSecret = 4;
     google.protobuf.Timestamp UtcCreate = 5;
     string description = 6;
-    string NodeType = 7;
+    DeviceNodeType NodeType = 7;
     map<string, string> extra = 8;
   }
   Data data = 1;
@@ -76,7 +83,7 @@ message QueryDeviceListResponse {
     string DeviceSecret = 4;
     google.protobuf.Timestamp UtcCreate = 5;
     string description = 6;
-    string NodeType = 7;
+    DeviceNodeType NodeType = 7;
     map<string, string> extra = 8;
   }
   message List {
