@@ -137,7 +137,7 @@ message QueryProductResponse {
 
 service RpcProduct {
   //查询所有产品
-  rpc QueryProductList(QueryProductListRequest) returns (QueryProductResponse) {}
+  rpc QueryProductList(QueryProductListRequest) returns (QueryProductListResponse) {}
   //查询单个产品
   rpc QueryProduct(QueryProductRequest) returns (QueryProductResponse) {}
 }
