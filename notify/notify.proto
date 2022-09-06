@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package notify;
+option go_package = "github.com/winc-link/iot-cloud-proto/notify";
+import "common/common.proto";
+import "google/protobuf/timestamp.proto";
+
+enum DriverStatus {
+  Stop = 0;
+  Start = 1;
+}
+
+message DriverStatusNotifyRequest{
+  google.protobuf.Timestamp happenTime = 1;
+  DriverStatus status = 2;
+  string DriverId = 3;
+}
+
+service RpcDriverNotify {
+  // 驱动程序启动或停止
+  rpc DriverStatusNotify (DriverStatusNotifyRequest) returns (common.CommonResponse) {}
+}

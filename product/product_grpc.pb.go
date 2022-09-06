@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RpcProductClient interface {
 	//查询所有产品
-	QueryProductList(ctx context.Context, in *QueryProductListRequest, opts ...grpc.CallOption) (*QueryProductResponse, error)
+	QueryProductList(ctx context.Context, in *QueryProductListRequest, opts ...grpc.CallOption) (*QueryProductListResponse, error)
 	//查询单个产品
 	QueryProduct(ctx context.Context, in *QueryProductRequest, opts ...grpc.CallOption) (*QueryProductResponse, error)
 }
@@ -36,8 +36,8 @@ func NewRpcProductClient(cc grpc.ClientConnInterface) RpcProductClient {
 	return &rpcProductClient{cc}
 }
 
-func (c *rpcProductClient) QueryProductList(ctx context.Context, in *QueryProductListRequest, opts ...grpc.CallOption) (*QueryProductResponse, error) {
-	out := new(QueryProductResponse)
+func (c *rpcProductClient) QueryProductList(ctx context.Context, in *QueryProductListRequest, opts ...grpc.CallOption) (*QueryProductListResponse, error) {
+	out := new(QueryProductListResponse)
 	err := c.cc.Invoke(ctx, "/product.RpcProduct/QueryProductList", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -59,7 +59,7 @@ func (c *rpcProductClient) QueryProduct(ctx context.Context, in *QueryProductReq
 // for forward compatibility
 type RpcProductServer interface {
 	//查询所有产品
-	QueryProductList(context.Context, *QueryProductListRequest) (*QueryProductResponse, error)
+	QueryProductList(context.Context, *QueryProductListRequest) (*QueryProductListResponse, error)
 	//查询单个产品
 	QueryProduct(context.Context, *QueryProductRequest) (*QueryProductResponse, error)
 	mustEmbedUnimplementedRpcProductServer()
@@ -69,7 +69,7 @@ type RpcProductServer interface {
 type UnimplementedRpcProductServer struct {
 }
 
-func (UnimplementedRpcProductServer) QueryProductList(context.Context, *QueryProductListRequest) (*QueryProductResponse, error) {
+func (UnimplementedRpcProductServer) QueryProductList(context.Context, *QueryProductListRequest) (*QueryProductListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryProductList not implemented")
 }
 func (UnimplementedRpcProductServer) QueryProduct(context.Context, *QueryProductRequest) (*QueryProductResponse, error) {

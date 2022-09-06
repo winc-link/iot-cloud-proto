@@ -113,5 +113,4 @@ service RpcDevice {
   rpc RegisterDevice (RegisterDeviceRequest) returns (RegisterDeviceResponse) {}
   // 删除设备
 //  rpc RegisterDevice (RegisterDeviceRequest) returns (RegisterDeviceResponse) {}
-
 }
