@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package property;
+option go_package = "github.com/winc-link/iot-cloud-proto/property";
+import "common/common.proto";
+import "google/protobuf/any.proto";
+
+
+message DevicePropertyReportRequest {
+  string DriverId = 1;
+  string DeviceId = 2;
+  google.protobuf.Any data = 3;
+}
+
+message DevicePropertySetRequest {
+
+}
+
+service RpcProperty {
+  //设备属性上报
+  rpc DevicePropertyReport(DevicePropertyReportRequest) returns (common.CommonResponse) {}
+  //平台设置设备属性
+  rpc DevicePropertySet (DevicePropertySetRequest) returns (common.CommonResponse) {}
+}
