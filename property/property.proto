@@ -13,7 +13,9 @@ message DevicePropertyReportRequest {
 }
 
 message DevicePropertySetRequest {
-
+  string messageId = 1;
+  string DeviceId = 2;
+  google.protobuf.Any data = 3;
 }
 
 service RpcProperty {
