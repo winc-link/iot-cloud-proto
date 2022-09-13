@@ -3,10 +3,10 @@ syntax = "proto3";
 package platform;
 option go_package = "github.com/winc-link/iot-cloud-proto/platform";
 import "common/common.proto";
-import "google/protobuf/any.proto";
+//import "google/protobuf/any.proto";
 
 enum OpType {
-  Property = 0;//属性下发
+  Property = 0;//属性设置
   Command = 1;//命令下发
 }
 
@@ -15,7 +15,7 @@ message PlatformMessageRequest {
   string messageId = 2;
   string DeviceId = 3;
   OpType type = 4;
-  google.protobuf.Any data = 5;
+  bytes data = 5;
 }
 
 
