@@ -6,6 +6,16 @@ import "google/protobuf/empty.proto";
 
 package common;
 
+enum IotPlatform {
+  CustomerIot = 0;//用户自定义
+  WinCLinkIot = 1; //赢创万联
+  AliIot = 2; //阿里
+  HuaweiIot = 3;//华为
+  TencentIot = 4;//腾讯
+  TuyaIot = 5;//涂鸦
+  OneNetIot = 6; //中国移动
+}
+
 // pong
 message Pong {
   string timestamp = 2;

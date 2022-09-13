@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package product;
 option go_package = "github.com/winc-link/iot-cloud-proto/product";
-
+import "common/common.proto";
 import "google/protobuf/any.proto";
 
 message QueryProductListRequest{
@@ -24,16 +24,6 @@ enum ProductNetType {
   NB = 4;
 }
 
-enum ProductPlatform {
-  CustomerIot = 0;//用户自定义
-  WinCLinkIot = 1; //赢创万联
-  AliIot = 2; //阿里
-  HuaweiIot = 3;//华为
-  TencentIot = 4;//腾讯
-  TuyaIot = 5;//涂鸦
-  OneNetIot = 6; //中国移动
-}
-
 message QueryProductListResponse {
   message Productinfo {
     uint64 CreateAt = 1; //创建时间
@@ -42,7 +32,7 @@ message QueryProductListResponse {
     string Description = 4;//描述
     ProductNodeType NodeType = 5;//产品的节点类型
     string DataFormat = 6;//上报数据的格式
-    ProductPlatform Platform = 7; //平台名称
+    common.IotPlatform Platform = 7; //平台名称
     ProductNetType NetType = 8;//联网方式
     map<string, string> extra = 9;
   }
@@ -63,7 +53,6 @@ message QueryProductListResponse {
 message QueryProductRequest {
   string productId = 1;
 }
-
 
 message Datatype {
   string type = 1;
@@ -121,7 +110,7 @@ message QueryProductResponse {
     string Description = 4;//描述
     ProductNodeType NodeType = 5;//产品的节点类型
     string DataFormat = 6;//上报数据的格式
-    ProductPlatform Platform = 7; //平台名称
+    common.IotPlatform Platform = 7; //平台名称
     ProductNetType NetType = 8;//联网方式
     repeated Properties properties = 9;//属性
     repeated Events events = 10;//事件

@@ -25,8 +25,6 @@ const _ = grpc.SupportPackageIsVersion7
 type RpcPropertyClient interface {
 	//设备属性上报
 	DevicePropertyReport(ctx context.Context, in *DevicePropertyReportRequest, opts ...grpc.CallOption) (*common.CommonResponse, error)
-	//平台设置设备属性
-	DevicePropertySet(ctx context.Context, in *DevicePropertySetRequest, opts ...grpc.CallOption) (*common.CommonResponse, error)
 }
 
 type rpcPropertyClient struct {
@@ -46,23 +44,12 @@ func (c *rpcPropertyClient) DevicePropertyReport(ctx context.Context, in *Device
 	return out, nil
 }
 
-func (c *rpcPropertyClient) DevicePropertySet(ctx context.Context, in *DevicePropertySetRequest, opts ...grpc.CallOption) (*common.CommonResponse, error) {
-	out := new(common.CommonResponse)
-	err := c.cc.Invoke(ctx, "/property.RpcProperty/DevicePropertySet", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // RpcPropertyServer is the server API for RpcProperty service.
 // All implementations must embed UnimplementedRpcPropertyServer
 // for forward compatibility
 type RpcPropertyServer interface {
 	//设备属性上报
 	DevicePropertyReport(context.Context, *DevicePropertyReportRequest) (*common.CommonResponse, error)
-	//平台设置设备属性
-	DevicePropertySet(context.Context, *DevicePropertySetRequest) (*common.CommonResponse, error)
 	mustEmbedUnimplementedRpcPropertyServer()
 }
 
@@ -72,9 +59,6 @@ type UnimplementedRpcPropertyServer struct {
 
 func (UnimplementedRpcPropertyServer) DevicePropertyReport(context.Context, *DevicePropertyReportRequest) (*common.CommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DevicePropertyReport not implemented")
-}
-func (UnimplementedRpcPropertyServer) DevicePropertySet(context.Context, *DevicePropertySetRequest) (*common.CommonResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DevicePropertySet not implemented")
 }
 func (UnimplementedRpcPropertyServer) mustEmbedUnimplementedRpcPropertyServer() {}
 
@@ -107,24 +91,6 @@ func _RpcProperty_DevicePropertyReport_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RpcProperty_DevicePropertySet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DevicePropertySetRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RpcPropertyServer).DevicePropertySet(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/property.RpcProperty/DevicePropertySet",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RpcPropertyServer).DevicePropertySet(ctx, req.(*DevicePropertySetRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // RpcProperty_ServiceDesc is the grpc.ServiceDesc for RpcProperty service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -135,10 +101,6 @@ var RpcProperty_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DevicePropertyReport",
 			Handler:    _RpcProperty_DevicePropertyReport_Handler,
-		},
-		{
-			MethodName: "DevicePropertySet",
-			Handler:    _RpcProperty_DevicePropertySet_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

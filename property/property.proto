@@ -12,15 +12,7 @@ message DevicePropertyReportRequest {
   google.protobuf.Any data = 3;
 }
 
-message DevicePropertySetRequest {
-  string messageId = 1;
-  string DeviceId = 2;
-  google.protobuf.Any data = 3;
-}
-
 service RpcProperty {
   //设备属性上报
   rpc DevicePropertyReport(DevicePropertyReportRequest) returns (common.CommonResponse) {}
-  //平台设置设备属性
-  rpc DevicePropertySet (DevicePropertySetRequest) returns (common.CommonResponse) {}
 }
