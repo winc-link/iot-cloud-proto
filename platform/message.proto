@@ -17,8 +17,9 @@ import "common/common.proto";
 
 message PlatformMessageRequest {
   common.IotPlatform Platform = 1; //平台名称
-  string topic = 2;
-  bytes message = 5;
+  string deviceId = 2;
+  string topic = 3;
+  bytes message = 4;
 }
 
 
