@@ -6,8 +6,13 @@ import "common/common.proto";
 //import "google/protobuf/any.proto";
 
 enum OpType {
-  Property = 0;//属性设置
+  PropertySet = 0;//属性设置
   Command = 1;//命令下发
+  Message = 2;//消息下发
+  PropertyGet = 3;//属性查询
+  Event = 4;//事件下发
+
+  Custom = 9;//自定义类型
 }
 
 message PlatformMessageRequest {
