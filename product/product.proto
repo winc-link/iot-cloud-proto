@@ -86,17 +86,18 @@ enum AccessMode {
 }
 
 message Typespec {
-  string type = 1;
-  string min = 2;
-  string max = 3;
-  string step = 4;
-  string unit = 5;
-  string scale = 6;
-  string maxlen = 7;
-  string maxsize = 8;
-  repeated string range = 9;
-  repeated string lable = 10;
-  string defaultValue = 11;
+  string type = 1;//设备属性的数据类型
+  string min = 2;//设备属性的最小值
+  string max = 3;//设备属性的最da值
+  string step = 4;//设备属性的步长
+  string unit = 5;//单位
+  string scale = 6;//缩放
+  string maxlen = 7;//设备属性的最大长度
+  string maxsize = 8;//设备属性的最大大小
+  repeated string range = 9;//设备属性的枚举值列表
+  repeated string lable = 10;//故障类型
+  string defaultValue = 11;//默认值
+  bool required = 12;//设备属性是否必选
 }
 
 message Properties {
