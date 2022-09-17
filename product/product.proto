@@ -66,6 +66,7 @@ message QueryProductResponse {
     string DataFormat = 6;//上报数据的格式
     common.IotPlatform Platform = 7; //平台名称
     ProductNetType NetType = 8;//联网方式
+    string protocolType = 13;//协议类型
     repeated Properties properties = 9;//属性
     repeated Events events = 10;//事件
     repeated Actions actions = 11; //动作
