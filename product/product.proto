@@ -3,6 +3,8 @@ syntax = "proto3";
 package product;
 option go_package = "github.com/winc-link/iot-cloud-proto/product";
 import "common/common.proto";
+import "google/protobuf/any.proto";
+
 
 message QueryProductListRequest{
   map<string, string> extra =1;
@@ -97,7 +99,7 @@ message Typespec {
   string maxsize = 8;//设备属性的最大大小
   repeated string range = 9;//设备属性的枚举值列表
   repeated string lable = 10;//故障类型
-  string defaultValue = 11;//默认值
+  google.protobuf.Any defaultValue = 11;//默认值
   bool required = 12;//设备属性是否必选
 }
 
