@@ -87,13 +87,13 @@ enum AccessMode {
 
 message Typespec {
   string type = 1;
-  uint32 min = 2;
-  uint32 max = 3;
-  uint32 step = 4;
+  string min = 2;
+  string max = 3;
+  string step = 4;
   string unit = 5;
   string scale = 6;
-  uint32 maxlen = 7;
-  uint32 maxsize = 8;
+  string maxlen = 7;
+  string maxsize = 8;
   repeated string range = 9;
   repeated string lable = 10;
   string defaultValue = 11;
