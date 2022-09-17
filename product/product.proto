@@ -3,7 +3,6 @@ syntax = "proto3";
 package product;
 option go_package = "github.com/winc-link/iot-cloud-proto/product";
 import "common/common.proto";
-import "google/protobuf/any.proto";
 
 message QueryProductListRequest{
   map<string, string> extra =1;
@@ -34,7 +33,10 @@ message QueryProductListResponse {
     string DataFormat = 6;//上报数据的格式
     common.IotPlatform Platform = 7; //平台名称
     ProductNetType NetType = 8;//联网方式
-    map<string, string> extra = 9;
+    repeated Properties properties = 9;
+    repeated Events events = 10;
+    repeated Actions actions = 11;
+    map<string, string> extra = 12;
   }
   message List {
     repeated Productinfo ProductInfo = 1;
@@ -54,54 +56,6 @@ message QueryProductRequest {
   string productId = 1;
 }
 
-message Datatype {
-  string type = 1;
-  google.protobuf.Any specs = 2;
-}
-
-message Properties {
-  string identifier = 1;
-  string name = 2;
-  string accessMode = 3;
-  string desc = 4;
-  bool required = 5;
-  Datatype dataType = 6;
-}
-
-
-// events
-message Events {
-  string identifier = 1;
-  string name = 2;
-  string type = 3;
-  bool required = 4;
-  string desc = 5;
-  string method = 6;
-  repeated Outputdata outputData = 7;
-}
-
-message Outputdata {
-  string identifier = 1;
-  string name = 2;
-  Datatype1 dataType = 3;
-}
-
-message Datatype1 {
-  string type = 1;
-  google.protobuf.Any specs = 2;
-}
-
-message Services {
-  string identifier = 1;
-  string name = 2;
-  bool required = 3;
-  string callType = 4;
-  string desc = 5;
-  string method = 6;
-//  repeated Inputdata inputData = 7;
-  repeated google.protobuf.Any outputData = 8;
-}
-
 message QueryProductResponse {
   message Data {
     uint64 CreateAt = 1; //创建时间
@@ -114,7 +68,7 @@ message QueryProductResponse {
     ProductNetType NetType = 8;//联网方式
     repeated Properties properties = 9;//属性
     repeated Events events = 10;//事件
-    repeated Services services = 11;
+    repeated Actions actions = 11; //动作
     map<string, string> extra = 12;
   }
   Data data = 1;
@@ -123,6 +77,71 @@ message QueryProductResponse {
   bool Success = 4;
   string errorMessage = 5;
 }
+
+enum AccessMode {
+  R = 0;
+  W = 1;
+  RW = 2;
+}
+
+message Typespec {
+  string type = 1;
+  uint32 min = 2;
+  uint32 max = 3;
+  uint32 step = 4;
+  string unit = 5;
+  string scale = 6;
+  uint32 maxlen = 7;
+  uint32 maxsize = 8;
+  repeated string range = 9;
+  repeated string lable = 10;
+  string defaultValue = 11;
+}
+
+message Properties {
+  string abilityId = 1;
+  string productId = 2;
+  string name = 3;
+  string code = 4;
+  AccessMode accessMode = 5;
+  Typespec typeSpec = 6;
+  map<string, string> extra = 7;
+}
+
+// events
+message Events {
+  string abilityId = 1;
+  string productId = 2;
+  string name = 3;
+  string code = 4;
+  string description = 5;
+  repeated OutputParams OutputParams = 6;
+  map<string, string> extra = 7;
+}
+
+message InputParams {
+  string code = 1;
+  string name = 2;
+  Typespec typeSpec = 3;
+}
+
+message OutputParams {
+  string code = 1;
+  string name = 2;
+  Typespec typeSpec = 3;
+}
+
+message Actions {
+  string abilityId = 1;
+  string productId = 2;
+  string name = 3;
+  string code = 4;
+  string description = 5;
+  repeated InputParams InputParams = 6;
+  repeated OutputParams OutputParams = 7;
+  map<string, string> extra = 8;
+}
+
 
 service RpcProduct {
   //查询所有产品
