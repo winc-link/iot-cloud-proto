@@ -80,9 +80,10 @@ message QueryProductResponse {
 }
 
 enum AccessMode {
-  R = 0;
-  W = 1;
-  RW = 2;
+  R = 0;//读
+  W = 1;//写
+  RW = 2;//读写
+
 }
 
 message Typespec {
@@ -105,9 +106,10 @@ message Properties {
   string productId = 2;
   string name = 3;
   string code = 4;
-  AccessMode accessMode = 5;
-  Typespec typeSpec = 6;
-  map<string, string> extra = 7;
+  string description = 5;
+  AccessMode accessMode = 6;
+  Typespec typeSpec = 7;
+  map<string, string> extra = 8;
 }
 
 // events
