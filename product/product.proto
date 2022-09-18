@@ -104,7 +104,7 @@ message Typespec {
 }
 
 message Properties {
-  string abilityId = 1;
+  string serviceId = 1;
   string productId = 2;
   string name = 3;
   string code = 4;
@@ -116,7 +116,7 @@ message Properties {
 
 // events
 message Events {
-  string abilityId = 1;
+  string serviceId = 1;
   string productId = 2;
   string name = 3;
   string code = 4;
@@ -138,7 +138,7 @@ message OutputParams {
 }
 
 message Actions {
-  string abilityId = 1;
+  string serviceId = 1;
   string productId = 2;
   string name = 3;
   string code = 4;
