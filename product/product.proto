@@ -25,21 +25,23 @@ enum ProductNetType {
   NB = 4;
 }
 
+message Productinfo {
+  uint64 CreateAt = 1; //创建时间
+  string ProductId = 2; //产品id
+  string ProductName = 3;//产品名称
+  string Description = 4;//描述
+  ProductNodeType NodeType = 5;//产品的节点类型
+  string DataFormat = 6;//上报数据的格式
+  common.IotPlatform Platform = 7; //平台名称
+  ProductNetType NetType = 8;//联网方式
+  string protocolType = 13;//协议类型
+  repeated Properties properties = 9;//属性
+  repeated Events events = 10;//事件
+  repeated Actions actions = 11; //动作
+  map<string, string> extra = 12;
+}
+
 message QueryProductListResponse {
-  message Productinfo {
-    uint64 CreateAt = 1; //创建时间
-    string ProductId = 2; //产品id
-    string ProductName = 3;//产品名称
-    string Description = 4;//描述
-    ProductNodeType NodeType = 5;//产品的节点类型
-    string DataFormat = 6;//上报数据的格式
-    common.IotPlatform Platform = 7; //平台名称
-    ProductNetType NetType = 8;//联网方式
-    repeated Properties properties = 9;
-    repeated Events events = 10;
-    repeated Actions actions = 11;
-    map<string, string> extra = 12;
-  }
   message List {
     repeated Productinfo ProductInfo = 1;
   }
@@ -59,22 +61,7 @@ message QueryProductRequest {
 }
 
 message QueryProductResponse {
-  message Data {
-    uint64 CreateAt = 1; //创建时间
-    string ProductId = 2; //产品id
-    string ProductName = 3;//产品名称
-    string Description = 4;//描述
-    ProductNodeType NodeType = 5;//产品的节点类型
-    string DataFormat = 6;//上报数据的格式
-    common.IotPlatform Platform = 7; //平台名称
-    ProductNetType NetType = 8;//联网方式
-    string protocolType = 13;//协议类型
-    repeated Properties properties = 9;//属性
-    repeated Events events = 10;//事件
-    repeated Actions actions = 11; //动作
-    map<string, string> extra = 12;
-  }
-  Data data = 1;
+  Productinfo Productinfo = 1;
   string RequestId = 2;
   string Code = 3;
   bool Success = 4;
