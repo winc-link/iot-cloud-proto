@@ -29,8 +29,8 @@ type RpcDeviceClient interface {
 	QueryDeviceDetail(ctx context.Context, in *QueryDeviceDetailRequest, opts ...grpc.CallOption) (*QueryDeviceDetailResponse, error)
 	//查询所有设备
 	QueryDeviceList(ctx context.Context, in *QueryDeviceListRequest, opts ...grpc.CallOption) (*QueryDeviceListResponse, error)
-	// 查询设备状态
-	GetDeviceStatus(ctx context.Context, in *GetDeviceStatusRequest, opts ...grpc.CallOption) (*GetDeviceStatusResponse, error)
+	// 查询设备连接状态
+	GetDeviceConnectStatus(ctx context.Context, in *GetDeviceConnectStatusRequest, opts ...grpc.CallOption) (*GetDeviceConnectStatusResponse, error)
 	// 添加设备
 	RegisterDevice(ctx context.Context, in *RegisterDeviceRequest, opts ...grpc.CallOption) (*RegisterDeviceResponse, error)
 }
@@ -70,9 +70,9 @@ func (c *rpcDeviceClient) QueryDeviceList(ctx context.Context, in *QueryDeviceLi
 	return out, nil
 }
 
-func (c *rpcDeviceClient) GetDeviceStatus(ctx context.Context, in *GetDeviceStatusRequest, opts ...grpc.CallOption) (*GetDeviceStatusResponse, error) {
-	out := new(GetDeviceStatusResponse)
-	err := c.cc.Invoke(ctx, "/device.RpcDevice/GetDeviceStatus", in, out, opts...)
+func (c *rpcDeviceClient) GetDeviceConnectStatus(ctx context.Context, in *GetDeviceConnectStatusRequest, opts ...grpc.CallOption) (*GetDeviceConnectStatusResponse, error) {
+	out := new(GetDeviceConnectStatusResponse)
+	err := c.cc.Invoke(ctx, "/device.RpcDevice/GetDeviceConnectStatus", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -98,8 +98,8 @@ type RpcDeviceServer interface {
 	QueryDeviceDetail(context.Context, *QueryDeviceDetailRequest) (*QueryDeviceDetailResponse, error)
 	//查询所有设备
 	QueryDeviceList(context.Context, *QueryDeviceListRequest) (*QueryDeviceListResponse, error)
-	// 查询设备状态
-	GetDeviceStatus(context.Context, *GetDeviceStatusRequest) (*GetDeviceStatusResponse, error)
+	// 查询设备连接状态
+	GetDeviceConnectStatus(context.Context, *GetDeviceConnectStatusRequest) (*GetDeviceConnectStatusResponse, error)
 	// 添加设备
 	RegisterDevice(context.Context, *RegisterDeviceRequest) (*RegisterDeviceResponse, error)
 	mustEmbedUnimplementedRpcDeviceServer()
@@ -118,8 +118,8 @@ func (UnimplementedRpcDeviceServer) QueryDeviceDetail(context.Context, *QueryDev
 func (UnimplementedRpcDeviceServer) QueryDeviceList(context.Context, *QueryDeviceListRequest) (*QueryDeviceListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryDeviceList not implemented")
 }
-func (UnimplementedRpcDeviceServer) GetDeviceStatus(context.Context, *GetDeviceStatusRequest) (*GetDeviceStatusResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetDeviceStatus not implemented")
+func (UnimplementedRpcDeviceServer) GetDeviceConnectStatus(context.Context, *GetDeviceConnectStatusRequest) (*GetDeviceConnectStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDeviceConnectStatus not implemented")
 }
 func (UnimplementedRpcDeviceServer) RegisterDevice(context.Context, *RegisterDeviceRequest) (*RegisterDeviceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RegisterDevice not implemented")
@@ -191,20 +191,20 @@ func _RpcDevice_QueryDeviceList_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RpcDevice_GetDeviceStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetDeviceStatusRequest)
+func _RpcDevice_GetDeviceConnectStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDeviceConnectStatusRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RpcDeviceServer).GetDeviceStatus(ctx, in)
+		return srv.(RpcDeviceServer).GetDeviceConnectStatus(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/device.RpcDevice/GetDeviceStatus",
+		FullMethod: "/device.RpcDevice/GetDeviceConnectStatus",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RpcDeviceServer).GetDeviceStatus(ctx, req.(*GetDeviceStatusRequest))
+		return srv.(RpcDeviceServer).GetDeviceConnectStatus(ctx, req.(*GetDeviceConnectStatusRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -247,8 +247,8 @@ var RpcDevice_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _RpcDevice_QueryDeviceList_Handler,
 		},
 		{
-			MethodName: "GetDeviceStatus",
-			Handler:    _RpcDevice_GetDeviceStatus_Handler,
+			MethodName: "GetDeviceConnectStatus",
+			Handler:    _RpcDevice_GetDeviceConnectStatus_Handler,
 		},
 		{
 			MethodName: "RegisterDevice",

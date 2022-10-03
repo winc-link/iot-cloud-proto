@@ -40,15 +40,19 @@ message QueryDeviceDetailResponse {
   string errorMessage = 5;
 }
 
-message GetDeviceStatusRequest {
+message GetDeviceConnectStatusRequest {
   string deviceId = 1;
   string driverId = 2;
 }
 
+enum ConnectStatus {
+  ONLINE = 0;//在线
+  OFFLINE = 1;//离线
+}
 
-message GetDeviceStatusResponse {
+message GetDeviceConnectStatusResponse {
   message Data {
-    string Status = 1;
+    ConnectStatus Status = 1;
     uint64 Timestamp = 2;
   }
 
@@ -115,8 +119,8 @@ service RpcDevice {
   rpc QueryDeviceDetail(QueryDeviceDetailRequest) returns (QueryDeviceDetailResponse) {}
   //查询所有设备
   rpc QueryDeviceList(QueryDeviceListRequest) returns (QueryDeviceListResponse) {}
-  // 查询设备状态
-  rpc GetDeviceStatus (GetDeviceStatusRequest) returns(GetDeviceStatusResponse){}
+  // 查询设备连接状态
+  rpc GetDeviceConnectStatus (GetDeviceConnectStatusRequest) returns(GetDeviceConnectStatusResponse){}
   // 添加设备
   rpc RegisterDevice (RegisterDeviceRequest) returns (RegisterDeviceResponse) {}
   // 删除设备
