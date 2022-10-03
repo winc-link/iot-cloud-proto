@@ -42,6 +42,7 @@ message QueryDeviceDetailResponse {
 
 message GetDeviceStatusRequest {
   string deviceId = 1;
+  string driverId = 2;
 }
 
 
