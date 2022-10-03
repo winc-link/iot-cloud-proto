@@ -65,9 +65,16 @@ message RegisterDeviceRequest {
 }
 
 message RegisterDeviceResponse {
-  string DeviceId = 1;
-  string DeviceSecret = 2;
-  map<string, string> extra =3;
+  message Data {
+    string DeviceId = 1;
+    string DeviceSecret = 2;
+    map<string, string> extra =3;
+  }
+  Data data = 1;
+  string RequestId = 2;
+  string Code = 3;
+  bool Success = 4;
+  string errorMessage = 5;
 }
 
 
