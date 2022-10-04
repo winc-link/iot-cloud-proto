@@ -98,8 +98,7 @@ message Typespec {
   string unitName = 16;//单位名称
   string scale = 6;//缩放
   string maxlen = 7;//设备属性的最大长度
-  string maxsize = 8;//设备属性的最大大小
-  repeated string range = 9;//设备属性的枚举值列表
+  map<string, string> range = 9;//设备属性的枚举值列表
   repeated string lable = 10;//故障类型
   google.protobuf.Any defaultValue = 11;//默认值
   bool required = 12;//设备属性是否必选
