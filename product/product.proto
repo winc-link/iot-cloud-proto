@@ -103,8 +103,7 @@ message Typespec {
   repeated string lable = 10;//故障类型
   google.protobuf.Any defaultValue = 11;//默认值
   bool required = 12;//设备属性是否必选
-  string true = 13 [json_name = "1"]; //bool类型
-  string false = 14 [json_name = "0"];//bool类型
+  map<string, string> bool = 18;//bool类型
   Item item = 15;//数组元素类型
 }
 
