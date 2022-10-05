@@ -6,6 +6,12 @@ import "google/protobuf/empty.proto";
 
 package common;
 
+enum ErrorCode {
+  UNKNOWN = 0;
+  NotExistedProduct = 1001;
+  NotExistedDevice = 2001;
+}
+
 enum IotPlatform {
   CustomerIot = 0;//用户自定义
   WinCLinkIot = 1; //赢创万联
