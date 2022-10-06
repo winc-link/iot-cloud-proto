@@ -118,12 +118,21 @@ message Properties {
   map<string, string> extra = 8;
 }
 
+enum EventType{
+  EventTypeUnKnow = 0;
+  EventTypeInfo = 1;
+  EventTypeAlert = 2;
+  EventTypeError = 3;
+}
+
 // events
 message Events {
   string serviceId = 1;
   string productId = 2;
   string name = 3;
   string code = 4;
+  bool required = 8;
+  EventType type = 9;
   string description = 5;
   repeated OutputParams OutputParams = 6;
   map<string, string> extra = 7;
@@ -141,11 +150,18 @@ message OutputParams {
   Typespec typeSpec = 3;
 }
 
+enum ActionsCallType {
+  ActionsCallTypeSync = 0;
+  ActionsCallTypeASync = 1;
+
+}
 message Actions {
   string serviceId = 1;
   string productId = 2;
   string name = 3;
   string code = 4;
+  bool required = 9;
+  ActionsCallType callType = 10;
   string description = 5;
   repeated InputParams InputParams = 6;
   repeated OutputParams OutputParams = 7;
