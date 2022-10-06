@@ -113,6 +113,7 @@ message Properties {
   string name = 3;
   string code = 4;
   string description = 5;
+  bool required = 9;
   AccessMode accessMode = 6;
   Typespec typeSpec = 7;
   map<string, string> extra = 8;
