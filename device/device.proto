@@ -87,10 +87,19 @@ message QueryDeviceListRequest {
   map<string, string> extra =1;
 }
 
+enum DeviceStatus {
+  DeviceStatusUnKnow = 0;
+  DeviceStatusOnLine = 1;
+  DeviceStatusOffLine = 2;
+  DeviceStatusUnActive = 3;
+  DeviceStatusDisable = 4;
+}
+
 message QueryDeviceListResponse {
   message DeviceInfo {
     string Status = 1;
     string DeviceId = 2;
+    string ProductId = 9;
     string DeviceName = 3;
     string DeviceSecret = 4;
     google.protobuf.Timestamp UtcCreate = 5;
