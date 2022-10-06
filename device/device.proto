@@ -23,17 +23,7 @@ message QueryDeviceDetailRequest {
 }
 
 message QueryDeviceDetailResponse {
-  message Data {
-    string Status = 1;
-    string DeviceId = 2;
-    string DeviceName = 3;
-    string DeviceSecret = 4;
-    google.protobuf.Timestamp UtcCreate = 5;
-    string description = 6;
-    DeviceNodeType NodeType = 7;
-    map<string, string> extra = 8;
-  }
-  Data data = 1;
+  DeviceInfo DeviceInfo = 1;
   string RequestId = 2;
   string Code = 3;
   bool Success = 4;
@@ -95,18 +85,20 @@ enum DeviceStatus {
   DeviceStatusDisable = 4;
 }
 
+message DeviceInfo {
+  DeviceStatus Status = 1;
+  string DeviceId = 2;
+  string ProductId = 9;
+  string DeviceName = 3;
+  string DeviceSecret = 4;
+  google.protobuf.Timestamp UtcCreate = 5;
+  string description = 6;
+  DeviceNodeType NodeType = 7;
+  map<string, string> extra = 8;
+}
+
 message QueryDeviceListResponse {
-  message DeviceInfo {
-    string Status = 1;
-    string DeviceId = 2;
-    string ProductId = 9;
-    string DeviceName = 3;
-    string DeviceSecret = 4;
-    google.protobuf.Timestamp UtcCreate = 5;
-    string description = 6;
-    DeviceNodeType NodeType = 7;
-    map<string, string> extra = 8;
-  }
+
   message List {
     repeated DeviceInfo DeviceInfo = 1;
   }
