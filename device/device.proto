@@ -78,11 +78,11 @@ message QueryDeviceListRequest {
 }
 
 enum DeviceStatus {
-  DeviceStatusUnKnow = 0;
-  DeviceStatusOnLine = 1;
-  DeviceStatusOffLine = 2;
-  DeviceStatusUnActive = 3;
-  DeviceStatusDisable = 4;
+  UnKnowStatus = 0;
+  OnLine = 1;
+  OffLine = 2;
+  UnActive = 3;
+  Disable = 4;
 }
 
 message DeviceInfo {
