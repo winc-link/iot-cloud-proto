@@ -19,8 +19,9 @@ message DevicePropertyReportRequest {
     message Params {
       repeated PropertyData propertyData = 1;
     }
-    Sys sys = 1;
-    Params params = 2;
+    string MessageId = 1;
+    Sys sys = 2;
+    Params params = 3;
   }
   string DriverId = 1;
   string DeviceId = 2;
