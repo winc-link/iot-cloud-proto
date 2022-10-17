@@ -21,122 +21,21 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type PropertyData struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	ReportTime int64  `protobuf:"varint,1,opt,name=reportTime,proto3" json:"reportTime,omitempty"`
-	Value      string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
-	Code       string `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`
-}
-
-func (x *PropertyData) Reset() {
-	*x = PropertyData{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_property_property_proto_msgTypes[0]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *PropertyData) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PropertyData) ProtoMessage() {}
-
-func (x *PropertyData) ProtoReflect() protoreflect.Message {
-	mi := &file_property_property_proto_msgTypes[0]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PropertyData.ProtoReflect.Descriptor instead.
-func (*PropertyData) Descriptor() ([]byte, []int) {
-	return file_property_property_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *PropertyData) GetReportTime() int64 {
-	if x != nil {
-		return x.ReportTime
-	}
-	return 0
-}
-
-func (x *PropertyData) GetValue() string {
-	if x != nil {
-		return x.Value
-	}
-	return ""
-}
-
-func (x *PropertyData) GetCode() string {
-	if x != nil {
-		return x.Code
-	}
-	return ""
-}
-
-type PropertyReportData struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-}
-
-func (x *PropertyReportData) Reset() {
-	*x = PropertyReportData{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_property_property_proto_msgTypes[1]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *PropertyReportData) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PropertyReportData) ProtoMessage() {}
-
-func (x *PropertyReportData) ProtoReflect() protoreflect.Message {
-	mi := &file_property_property_proto_msgTypes[1]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PropertyReportData.ProtoReflect.Descriptor instead.
-func (*PropertyReportData) Descriptor() ([]byte, []int) {
-	return file_property_property_proto_rawDescGZIP(), []int{1}
-}
-
 type DevicePropertyReportRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	DriverId  string              `protobuf:"bytes,1,opt,name=DriverId,proto3" json:"DriverId,omitempty"`
-	DeviceId  string              `protobuf:"bytes,2,opt,name=DeviceId,proto3" json:"DeviceId,omitempty"`
-	ProductId string              `protobuf:"bytes,3,opt,name=ProductId,proto3" json:"ProductId,omitempty"`
-	Data      *PropertyReportData `protobuf:"bytes,4,opt,name=data,proto3" json:"data,omitempty"`
+	DriverId           string                                          `protobuf:"bytes,1,opt,name=DriverId,proto3" json:"DriverId,omitempty"`
+	DeviceId           string                                          `protobuf:"bytes,2,opt,name=DeviceId,proto3" json:"DeviceId,omitempty"`
+	ProductId          string                                          `protobuf:"bytes,3,opt,name=ProductId,proto3" json:"ProductId,omitempty"`
+	PropertyReportData *DevicePropertyReportRequest_PropertyReportData `protobuf:"bytes,4,opt,name=propertyReportData,proto3" json:"propertyReportData,omitempty"`
 }
 
 func (x *DevicePropertyReportRequest) Reset() {
 	*x = DevicePropertyReportRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_property_property_proto_msgTypes[2]
+		mi := &file_property_property_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -149,7 +48,7 @@ func (x *DevicePropertyReportRequest) String() string {
 func (*DevicePropertyReportRequest) ProtoMessage() {}
 
 func (x *DevicePropertyReportRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_property_property_proto_msgTypes[2]
+	mi := &file_property_property_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -162,7 +61,7 @@ func (x *DevicePropertyReportRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DevicePropertyReportRequest.ProtoReflect.Descriptor instead.
 func (*DevicePropertyReportRequest) Descriptor() ([]byte, []int) {
-	return file_property_property_proto_rawDescGZIP(), []int{2}
+	return file_property_property_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *DevicePropertyReportRequest) GetDriverId() string {
@@ -186,14 +85,132 @@ func (x *DevicePropertyReportRequest) GetProductId() string {
 	return ""
 }
 
-func (x *DevicePropertyReportRequest) GetData() *PropertyReportData {
+func (x *DevicePropertyReportRequest) GetPropertyReportData() *DevicePropertyReportRequest_PropertyReportData {
 	if x != nil {
-		return x.Data
+		return x.PropertyReportData
 	}
 	return nil
 }
 
-type PropertyReportData_Sys struct {
+type DevicePropertyReportRequest_PropertyData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ReportTime int64  `protobuf:"varint,1,opt,name=reportTime,proto3" json:"reportTime,omitempty"`
+	Value      string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+	Code       string `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`
+}
+
+func (x *DevicePropertyReportRequest_PropertyData) Reset() {
+	*x = DevicePropertyReportRequest_PropertyData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_property_property_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DevicePropertyReportRequest_PropertyData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DevicePropertyReportRequest_PropertyData) ProtoMessage() {}
+
+func (x *DevicePropertyReportRequest_PropertyData) ProtoReflect() protoreflect.Message {
+	mi := &file_property_property_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DevicePropertyReportRequest_PropertyData.ProtoReflect.Descriptor instead.
+func (*DevicePropertyReportRequest_PropertyData) Descriptor() ([]byte, []int) {
+	return file_property_property_proto_rawDescGZIP(), []int{0, 0}
+}
+
+func (x *DevicePropertyReportRequest_PropertyData) GetReportTime() int64 {
+	if x != nil {
+		return x.ReportTime
+	}
+	return 0
+}
+
+func (x *DevicePropertyReportRequest_PropertyData) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+func (x *DevicePropertyReportRequest_PropertyData) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+type DevicePropertyReportRequest_PropertyReportData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Sys    *DevicePropertyReportRequest_PropertyReportData_Sys    `protobuf:"bytes,1,opt,name=sys,proto3" json:"sys,omitempty"`
+	Params *DevicePropertyReportRequest_PropertyReportData_Params `protobuf:"bytes,2,opt,name=params,proto3" json:"params,omitempty"`
+}
+
+func (x *DevicePropertyReportRequest_PropertyReportData) Reset() {
+	*x = DevicePropertyReportRequest_PropertyReportData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_property_property_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DevicePropertyReportRequest_PropertyReportData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DevicePropertyReportRequest_PropertyReportData) ProtoMessage() {}
+
+func (x *DevicePropertyReportRequest_PropertyReportData) ProtoReflect() protoreflect.Message {
+	mi := &file_property_property_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DevicePropertyReportRequest_PropertyReportData.ProtoReflect.Descriptor instead.
+func (*DevicePropertyReportRequest_PropertyReportData) Descriptor() ([]byte, []int) {
+	return file_property_property_proto_rawDescGZIP(), []int{0, 1}
+}
+
+func (x *DevicePropertyReportRequest_PropertyReportData) GetSys() *DevicePropertyReportRequest_PropertyReportData_Sys {
+	if x != nil {
+		return x.Sys
+	}
+	return nil
+}
+
+func (x *DevicePropertyReportRequest_PropertyReportData) GetParams() *DevicePropertyReportRequest_PropertyReportData_Params {
+	if x != nil {
+		return x.Params
+	}
+	return nil
+}
+
+type DevicePropertyReportRequest_PropertyReportData_Sys struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -201,8 +218,8 @@ type PropertyReportData_Sys struct {
 	Ack uint32 `protobuf:"varint,1,opt,name=ack,proto3" json:"ack,omitempty"`
 }
 
-func (x *PropertyReportData_Sys) Reset() {
-	*x = PropertyReportData_Sys{}
+func (x *DevicePropertyReportRequest_PropertyReportData_Sys) Reset() {
+	*x = DevicePropertyReportRequest_PropertyReportData_Sys{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_property_property_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -210,13 +227,13 @@ func (x *PropertyReportData_Sys) Reset() {
 	}
 }
 
-func (x *PropertyReportData_Sys) String() string {
+func (x *DevicePropertyReportRequest_PropertyReportData_Sys) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*PropertyReportData_Sys) ProtoMessage() {}
+func (*DevicePropertyReportRequest_PropertyReportData_Sys) ProtoMessage() {}
 
-func (x *PropertyReportData_Sys) ProtoReflect() protoreflect.Message {
+func (x *DevicePropertyReportRequest_PropertyReportData_Sys) ProtoReflect() protoreflect.Message {
 	mi := &file_property_property_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -228,28 +245,28 @@ func (x *PropertyReportData_Sys) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use PropertyReportData_Sys.ProtoReflect.Descriptor instead.
-func (*PropertyReportData_Sys) Descriptor() ([]byte, []int) {
-	return file_property_property_proto_rawDescGZIP(), []int{1, 0}
+// Deprecated: Use DevicePropertyReportRequest_PropertyReportData_Sys.ProtoReflect.Descriptor instead.
+func (*DevicePropertyReportRequest_PropertyReportData_Sys) Descriptor() ([]byte, []int) {
+	return file_property_property_proto_rawDescGZIP(), []int{0, 1, 0}
 }
 
-func (x *PropertyReportData_Sys) GetAck() uint32 {
+func (x *DevicePropertyReportRequest_PropertyReportData_Sys) GetAck() uint32 {
 	if x != nil {
 		return x.Ack
 	}
 	return 0
 }
 
-type PropertyReportData_Param struct {
+type DevicePropertyReportRequest_PropertyReportData_Params struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Data []*PropertyData `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty"`
+	PropertyData []*DevicePropertyReportRequest_PropertyData `protobuf:"bytes,1,rep,name=propertyData,proto3" json:"propertyData,omitempty"`
 }
 
-func (x *PropertyReportData_Param) Reset() {
-	*x = PropertyReportData_Param{}
+func (x *DevicePropertyReportRequest_PropertyReportData_Params) Reset() {
+	*x = DevicePropertyReportRequest_PropertyReportData_Params{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_property_property_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -257,13 +274,13 @@ func (x *PropertyReportData_Param) Reset() {
 	}
 }
 
-func (x *PropertyReportData_Param) String() string {
+func (x *DevicePropertyReportRequest_PropertyReportData_Params) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*PropertyReportData_Param) ProtoMessage() {}
+func (*DevicePropertyReportRequest_PropertyReportData_Params) ProtoMessage() {}
 
-func (x *PropertyReportData_Param) ProtoReflect() protoreflect.Message {
+func (x *DevicePropertyReportRequest_PropertyReportData_Params) ProtoReflect() protoreflect.Message {
 	mi := &file_property_property_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -275,14 +292,14 @@ func (x *PropertyReportData_Param) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use PropertyReportData_Param.ProtoReflect.Descriptor instead.
-func (*PropertyReportData_Param) Descriptor() ([]byte, []int) {
-	return file_property_property_proto_rawDescGZIP(), []int{1, 1}
+// Deprecated: Use DevicePropertyReportRequest_PropertyReportData_Params.ProtoReflect.Descriptor instead.
+func (*DevicePropertyReportRequest_PropertyReportData_Params) Descriptor() ([]byte, []int) {
+	return file_property_property_proto_rawDescGZIP(), []int{0, 1, 1}
 }
 
-func (x *PropertyReportData_Param) GetData() []*PropertyData {
+func (x *DevicePropertyReportRequest_PropertyReportData_Params) GetPropertyData() []*DevicePropertyReportRequest_PropertyData {
 	if x != nil {
-		return x.Data
+		return x.PropertyData
 	}
 	return nil
 }
@@ -293,39 +310,56 @@ var file_property_property_proto_rawDesc = []byte{
 	0x0a, 0x17, 0x70, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x2f, 0x70, 0x72, 0x6f, 0x70, 0x65,
 	0x72, 0x74, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x08, 0x70, 0x72, 0x6f, 0x70, 0x65,
 	0x72, 0x74, 0x79, 0x1a, 0x13, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2f, 0x63, 0x6f, 0x6d, 0x6d,
-	0x6f, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x58, 0x0a, 0x0c, 0x50, 0x72, 0x6f, 0x70,
+	0x6f, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xf2, 0x04, 0x0a, 0x1b, 0x44, 0x65, 0x76,
+	0x69, 0x63, 0x65, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x52, 0x65, 0x70, 0x6f, 0x72,
+	0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x44, 0x72, 0x69, 0x76,
+	0x65, 0x72, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x44, 0x72, 0x69, 0x76,
+	0x65, 0x72, 0x49, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x49, 0x64,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x49, 0x64,
+	0x12, 0x1c, 0x0a, 0x09, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x64, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x09, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x64, 0x12, 0x68,
+	0x0a, 0x12, 0x70, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x52, 0x65, 0x70, 0x6f, 0x72, 0x74,
+	0x44, 0x61, 0x74, 0x61, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x38, 0x2e, 0x70, 0x72, 0x6f,
+	0x70, 0x65, 0x72, 0x74, 0x79, 0x2e, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x50, 0x72, 0x6f, 0x70,
+	0x65, 0x72, 0x74, 0x79, 0x52, 0x65, 0x70, 0x6f, 0x72, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x2e, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x52, 0x65, 0x70, 0x6f, 0x72, 0x74,
+	0x44, 0x61, 0x74, 0x61, 0x52, 0x12, 0x70, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x52, 0x65,
+	0x70, 0x6f, 0x72, 0x74, 0x44, 0x61, 0x74, 0x61, 0x1a, 0x58, 0x0a, 0x0c, 0x50, 0x72, 0x6f, 0x70,
 	0x65, 0x72, 0x74, 0x79, 0x44, 0x61, 0x74, 0x61, 0x12, 0x1e, 0x0a, 0x0a, 0x72, 0x65, 0x70, 0x6f,
 	0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0a, 0x72, 0x65,
 	0x70, 0x6f, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75,
 	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x12,
 	0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x63, 0x6f,
-	0x64, 0x65, 0x22, 0x62, 0x0a, 0x12, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x52, 0x65,
-	0x70, 0x6f, 0x72, 0x74, 0x44, 0x61, 0x74, 0x61, 0x1a, 0x17, 0x0a, 0x03, 0x53, 0x79, 0x73, 0x12,
-	0x10, 0x0a, 0x03, 0x61, 0x63, 0x6b, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x03, 0x61, 0x63,
-	0x6b, 0x1a, 0x33, 0x0a, 0x05, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x12, 0x2a, 0x0a, 0x04, 0x64, 0x61,
-	0x74, 0x61, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x70, 0x72, 0x6f, 0x70, 0x65,
-	0x72, 0x74, 0x79, 0x2e, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x44, 0x61, 0x74, 0x61,
-	0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xa5, 0x01, 0x0a, 0x1b, 0x44, 0x65, 0x76, 0x69, 0x63,
-	0x65, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x52, 0x65, 0x70, 0x6f, 0x72, 0x74, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x44, 0x72, 0x69, 0x76, 0x65, 0x72,
-	0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x44, 0x72, 0x69, 0x76, 0x65, 0x72,
-	0x49, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x49, 0x64, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x49, 0x64, 0x12, 0x1c,
-	0x0a, 0x09, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x09, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x64, 0x12, 0x30, 0x0a, 0x04,
-	0x64, 0x61, 0x74, 0x61, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x70, 0x72, 0x6f,
-	0x70, 0x65, 0x72, 0x74, 0x79, 0x2e, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x52, 0x65,
-	0x70, 0x6f, 0x72, 0x74, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x32, 0x66,
-	0x0a, 0x0b, 0x52, 0x70, 0x63, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x12, 0x57, 0x0a,
-	0x14, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x52,
-	0x65, 0x70, 0x6f, 0x72, 0x74, 0x12, 0x25, 0x2e, 0x70, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79,
-	0x2e, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x52,
-	0x65, 0x70, 0x6f, 0x72, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x63,
-	0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x2f, 0x5a, 0x2d, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
-	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x77, 0x69, 0x6e, 0x63, 0x2d, 0x6c, 0x69, 0x6e, 0x6b, 0x2f, 0x69,
-	0x6f, 0x74, 0x2d, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x70,
-	0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x64, 0x65, 0x1a, 0xb8, 0x02, 0x0a, 0x12, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x52,
+	0x65, 0x70, 0x6f, 0x72, 0x74, 0x44, 0x61, 0x74, 0x61, 0x12, 0x4e, 0x0a, 0x03, 0x73, 0x79, 0x73,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x3c, 0x2e, 0x70, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74,
+	0x79, 0x2e, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79,
+	0x52, 0x65, 0x70, 0x6f, 0x72, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x50, 0x72,
+	0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x52, 0x65, 0x70, 0x6f, 0x72, 0x74, 0x44, 0x61, 0x74, 0x61,
+	0x2e, 0x53, 0x79, 0x73, 0x52, 0x03, 0x73, 0x79, 0x73, 0x12, 0x57, 0x0a, 0x06, 0x70, 0x61, 0x72,
+	0x61, 0x6d, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x3f, 0x2e, 0x70, 0x72, 0x6f, 0x70,
+	0x65, 0x72, 0x74, 0x79, 0x2e, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x50, 0x72, 0x6f, 0x70, 0x65,
+	0x72, 0x74, 0x79, 0x52, 0x65, 0x70, 0x6f, 0x72, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x2e, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x52, 0x65, 0x70, 0x6f, 0x72, 0x74, 0x44,
+	0x61, 0x74, 0x61, 0x2e, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x06, 0x70, 0x61, 0x72, 0x61,
+	0x6d, 0x73, 0x1a, 0x17, 0x0a, 0x03, 0x53, 0x79, 0x73, 0x12, 0x10, 0x0a, 0x03, 0x61, 0x63, 0x6b,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x03, 0x61, 0x63, 0x6b, 0x1a, 0x60, 0x0a, 0x06, 0x50,
+	0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x56, 0x0a, 0x0c, 0x70, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74,
+	0x79, 0x44, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x32, 0x2e, 0x70, 0x72,
+	0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x2e, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x50, 0x72, 0x6f,
+	0x70, 0x65, 0x72, 0x74, 0x79, 0x52, 0x65, 0x70, 0x6f, 0x72, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x2e, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x44, 0x61, 0x74, 0x61, 0x52,
+	0x0c, 0x70, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x44, 0x61, 0x74, 0x61, 0x32, 0x66, 0x0a,
+	0x0b, 0x52, 0x70, 0x63, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x12, 0x57, 0x0a, 0x14,
+	0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x52, 0x65,
+	0x70, 0x6f, 0x72, 0x74, 0x12, 0x25, 0x2e, 0x70, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x2e,
+	0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x52, 0x65,
+	0x70, 0x6f, 0x72, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x63, 0x6f,
+	0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x2f, 0x5a, 0x2d, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
+	0x63, 0x6f, 0x6d, 0x2f, 0x77, 0x69, 0x6e, 0x63, 0x2d, 0x6c, 0x69, 0x6e, 0x6b, 0x2f, 0x69, 0x6f,
+	0x74, 0x2d, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x70, 0x72,
+	0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -342,23 +376,25 @@ func file_property_property_proto_rawDescGZIP() []byte {
 
 var file_property_property_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_property_property_proto_goTypes = []interface{}{
-	(*PropertyData)(nil),                // 0: property.PropertyData
-	(*PropertyReportData)(nil),          // 1: property.PropertyReportData
-	(*DevicePropertyReportRequest)(nil), // 2: property.DevicePropertyReportRequest
-	(*PropertyReportData_Sys)(nil),      // 3: property.PropertyReportData.Sys
-	(*PropertyReportData_Param)(nil),    // 4: property.PropertyReportData.Param
-	(*common.CommonResponse)(nil),       // 5: common.CommonResponse
+	(*DevicePropertyReportRequest)(nil),                           // 0: property.DevicePropertyReportRequest
+	(*DevicePropertyReportRequest_PropertyData)(nil),              // 1: property.DevicePropertyReportRequest.PropertyData
+	(*DevicePropertyReportRequest_PropertyReportData)(nil),        // 2: property.DevicePropertyReportRequest.PropertyReportData
+	(*DevicePropertyReportRequest_PropertyReportData_Sys)(nil),    // 3: property.DevicePropertyReportRequest.PropertyReportData.Sys
+	(*DevicePropertyReportRequest_PropertyReportData_Params)(nil), // 4: property.DevicePropertyReportRequest.PropertyReportData.Params
+	(*common.CommonResponse)(nil),                                 // 5: common.CommonResponse
 }
 var file_property_property_proto_depIdxs = []int32{
-	1, // 0: property.DevicePropertyReportRequest.data:type_name -> property.PropertyReportData
-	0, // 1: property.PropertyReportData.Param.data:type_name -> property.PropertyData
-	2, // 2: property.RpcProperty.DevicePropertyReport:input_type -> property.DevicePropertyReportRequest
-	5, // 3: property.RpcProperty.DevicePropertyReport:output_type -> common.CommonResponse
-	3, // [3:4] is the sub-list for method output_type
-	2, // [2:3] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	2, // 0: property.DevicePropertyReportRequest.propertyReportData:type_name -> property.DevicePropertyReportRequest.PropertyReportData
+	3, // 1: property.DevicePropertyReportRequest.PropertyReportData.sys:type_name -> property.DevicePropertyReportRequest.PropertyReportData.Sys
+	4, // 2: property.DevicePropertyReportRequest.PropertyReportData.params:type_name -> property.DevicePropertyReportRequest.PropertyReportData.Params
+	1, // 3: property.DevicePropertyReportRequest.PropertyReportData.Params.propertyData:type_name -> property.DevicePropertyReportRequest.PropertyData
+	0, // 4: property.RpcProperty.DevicePropertyReport:input_type -> property.DevicePropertyReportRequest
+	5, // 5: property.RpcProperty.DevicePropertyReport:output_type -> common.CommonResponse
+	5, // [5:6] is the sub-list for method output_type
+	4, // [4:5] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_property_property_proto_init() }
@@ -368,30 +404,6 @@ func file_property_property_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_property_property_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*PropertyData); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_property_property_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*PropertyReportData); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_property_property_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DevicePropertyReportRequest); i {
 			case 0:
 				return &v.state
@@ -403,8 +415,32 @@ func file_property_property_proto_init() {
 				return nil
 			}
 		}
+		file_property_property_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DevicePropertyReportRequest_PropertyData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_property_property_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DevicePropertyReportRequest_PropertyReportData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 		file_property_property_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*PropertyReportData_Sys); i {
+			switch v := v.(*DevicePropertyReportRequest_PropertyReportData_Sys); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -416,7 +452,7 @@ func file_property_property_proto_init() {
 			}
 		}
 		file_property_property_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*PropertyReportData_Param); i {
+			switch v := v.(*DevicePropertyReportRequest_PropertyReportData_Params); i {
 			case 0:
 				return &v.state
 			case 1:

@@ -5,26 +5,27 @@ option go_package = "github.com/winc-link/iot-cloud-proto/property";
 import "common/common.proto";
 
 
-message PropertyData {
-  int64 reportTime = 1;
-  string value = 2;
-  string code = 3;
-}
-
-message PropertyReportData {
-  message Sys {
-    uint32 ack = 1;
-  }
-  message Param {
-   repeated PropertyData data = 1;
-  }
-}
-
 message DevicePropertyReportRequest {
+  message PropertyData {
+    int64 reportTime = 1;
+    string value = 2;
+    string code = 3;
+  }
+
+  message PropertyReportData {
+    message Sys {
+      uint32 ack = 1;
+    }
+    message Params {
+      repeated PropertyData propertyData = 1;
+    }
+    Sys sys = 1;
+    Params params = 2;
+  }
   string DriverId = 1;
   string DeviceId = 2;
   string ProductId = 3;
-  PropertyReportData data = 4;
+  PropertyReportData propertyReportData = 4;
 }
 
 service RpcProperty {
