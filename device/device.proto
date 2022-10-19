@@ -14,7 +14,6 @@ enum DeviceNodeType {
 
 message ConnectIotCloudRequest {
   string deviceId = 1;
-  string driverId = 2;
   map<string, string> extra =3;
 }
 
@@ -32,7 +31,6 @@ message QueryDeviceDetailResponse {
 
 message GetDeviceConnectStatusRequest {
   string deviceId = 1;
-  string driverId = 2;
 }
 
 enum ConnectStatus {
