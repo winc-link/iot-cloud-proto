@@ -23,8 +23,10 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RpcDeviceClient interface {
-	//连接云服务
+	//设备连接云服务
 	ConnectIotCloud(ctx context.Context, in *ConnectIotCloudRequest, opts ...grpc.CallOption) (*common.CommonResponse, error)
+	// 设备断开链接
+	CloseConnectIotCloud(ctx context.Context, in *CloseConnectIotCloudRequest, opts ...grpc.CallOption) (*common.CommonResponse, error)
 	// 查询指定设备的详细信息
 	QueryDeviceDetail(ctx context.Context, in *QueryDeviceDetailRequest, opts ...grpc.CallOption) (*QueryDeviceDetailResponse, error)
 	//查询所有设备
@@ -46,6 +48,15 @@ func NewRpcDeviceClient(cc grpc.ClientConnInterface) RpcDeviceClient {
 func (c *rpcDeviceClient) ConnectIotCloud(ctx context.Context, in *ConnectIotCloudRequest, opts ...grpc.CallOption) (*common.CommonResponse, error) {
 	out := new(common.CommonResponse)
 	err := c.cc.Invoke(ctx, "/device.RpcDevice/ConnectIotCloud", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *rpcDeviceClient) CloseConnectIotCloud(ctx context.Context, in *CloseConnectIotCloudRequest, opts ...grpc.CallOption) (*common.CommonResponse, error) {
+	out := new(common.CommonResponse)
+	err := c.cc.Invoke(ctx, "/device.RpcDevice/CloseConnectIotCloud", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -92,8 +103,10 @@ func (c *rpcDeviceClient) RegisterDevice(ctx context.Context, in *RegisterDevice
 // All implementations must embed UnimplementedRpcDeviceServer
 // for forward compatibility
 type RpcDeviceServer interface {
-	//连接云服务
+	//设备连接云服务
 	ConnectIotCloud(context.Context, *ConnectIotCloudRequest) (*common.CommonResponse, error)
+	// 设备断开链接
+	CloseConnectIotCloud(context.Context, *CloseConnectIotCloudRequest) (*common.CommonResponse, error)
 	// 查询指定设备的详细信息
 	QueryDeviceDetail(context.Context, *QueryDeviceDetailRequest) (*QueryDeviceDetailResponse, error)
 	//查询所有设备
@@ -111,6 +124,9 @@ type UnimplementedRpcDeviceServer struct {
 
 func (UnimplementedRpcDeviceServer) ConnectIotCloud(context.Context, *ConnectIotCloudRequest) (*common.CommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ConnectIotCloud not implemented")
+}
+func (UnimplementedRpcDeviceServer) CloseConnectIotCloud(context.Context, *CloseConnectIotCloudRequest) (*common.CommonResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CloseConnectIotCloud not implemented")
 }
 func (UnimplementedRpcDeviceServer) QueryDeviceDetail(context.Context, *QueryDeviceDetailRequest) (*QueryDeviceDetailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryDeviceDetail not implemented")
@@ -151,6 +167,24 @@ func _RpcDevice_ConnectIotCloud_Handler(srv interface{}, ctx context.Context, de
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RpcDeviceServer).ConnectIotCloud(ctx, req.(*ConnectIotCloudRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RpcDevice_CloseConnectIotCloud_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CloseConnectIotCloudRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RpcDeviceServer).CloseConnectIotCloud(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/device.RpcDevice/CloseConnectIotCloud",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RpcDeviceServer).CloseConnectIotCloud(ctx, req.(*CloseConnectIotCloudRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -237,6 +271,10 @@ var RpcDevice_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ConnectIotCloud",
 			Handler:    _RpcDevice_ConnectIotCloud_Handler,
+		},
+		{
+			MethodName: "CloseConnectIotCloud",
+			Handler:    _RpcDevice_CloseConnectIotCloud_Handler,
 		},
 		{
 			MethodName: "QueryDeviceDetail",
