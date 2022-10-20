@@ -7,35 +7,6 @@ import "common/common.proto";
 
 
 message DevicePropertyReportRequest {
-//  message PropertyData {
-//    int64 reportTime = 1;
-//    string value = 2;
-//    string code = 3;
-//    product.DataType DataType = 4;
-//  }
-//
-//  message PropertyReportData {
-
-//    message Params {
-//      repeated PropertyData propertyData = 1;
-//    }
-//    string MessageId = 1;
-//    Sys sys = 2;
-//    Params params = 3;
-//  }
-//  string DeviceId = 2;
-//  string ProductId = 3;
-//  PropertyReportData propertyReportData = 4;
-
-  message BaseMessage {
-    message Sys {
-      uint32 ack = 1;
-    }
-    string Version = 1;
-    string MessageId = 2;
-    Sys sys = 3;
-  }
-  BaseMessage baseMessage = 1;
   string data = 2;
   string deviceId = 3;
   string productId = 4;
