@@ -3,13 +3,12 @@ syntax = "proto3";
 package event;
 option go_package = "github.com/winc-link/iot-cloud-proto/event";
 import "common/common.proto";
-import "google/protobuf/any.proto";
 
 
 message DeviceEventReportRequest {
-  string DriverId = 1;
-  string DeviceId = 2;
-  google.protobuf.Any data = 3;
+  string data = 2;
+  string deviceId = 3;
+  string productId = 4;
 }
 
 service RpcEvent {
