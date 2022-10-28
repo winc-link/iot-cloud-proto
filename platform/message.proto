@@ -5,25 +5,27 @@ option go_package = "github.com/winc-link/iot-cloud-proto/platform";
 import "common/common.proto";
 //import "google/protobuf/any.proto";
 
-//enum OpType {
-//  PropertySet = 0;//属性设置
-//  Command = 1;//命令下发
-//  Message = 2;//消息下发
-//  PropertyGet = 3;//属性查询
-//  Event = 4;//事件下发
-//
-//  Custom = 9;//自定义类型
-//}
+enum messageType {
+  Custom = 0;//自定义类型
+  PropertySet = 1;//属性设置
+  Command = 2;//命令下发
+  Message = 3;//消息下发
+  PropertyGet = 4;//属性查询
+  Event = 5;//事件下发
+}
 
 message PlatformMessageRequest {
-  common.IotPlatform Platform = 1; //平台名称
+  message MessageInfo {
+    string topic = 1;
+    bytes payload = 2;
+  }
+  messageType messageType = 1;
   string deviceId = 2;
-  string topic = 3;
-  bytes message = 4;
+  MessageInfo messageInfo = 3;
 }
 
 
-service RpcPlatformMessage {
+service RpcIotPlatformMessage {
   // 云平台给网关发送消息入口
-  rpc PlatformMessage (PlatformMessageRequest) returns (common.CommonResponse) {}
+  rpc IotPlatformMessage (PlatformMessageRequest) returns (common.CommonResponse) {}
 }

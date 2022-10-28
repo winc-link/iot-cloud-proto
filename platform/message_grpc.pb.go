@@ -19,88 +19,88 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// RpcPlatformMessageClient is the client API for RpcPlatformMessage service.
+// RpcIotPlatformMessageClient is the client API for RpcIotPlatformMessage service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type RpcPlatformMessageClient interface {
+type RpcIotPlatformMessageClient interface {
 	// 云平台给网关发送消息入口
-	PlatformMessage(ctx context.Context, in *PlatformMessageRequest, opts ...grpc.CallOption) (*common.CommonResponse, error)
+	IotPlatformMessage(ctx context.Context, in *PlatformMessageRequest, opts ...grpc.CallOption) (*common.CommonResponse, error)
 }
 
-type rpcPlatformMessageClient struct {
+type rpcIotPlatformMessageClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewRpcPlatformMessageClient(cc grpc.ClientConnInterface) RpcPlatformMessageClient {
-	return &rpcPlatformMessageClient{cc}
+func NewRpcIotPlatformMessageClient(cc grpc.ClientConnInterface) RpcIotPlatformMessageClient {
+	return &rpcIotPlatformMessageClient{cc}
 }
 
-func (c *rpcPlatformMessageClient) PlatformMessage(ctx context.Context, in *PlatformMessageRequest, opts ...grpc.CallOption) (*common.CommonResponse, error) {
+func (c *rpcIotPlatformMessageClient) IotPlatformMessage(ctx context.Context, in *PlatformMessageRequest, opts ...grpc.CallOption) (*common.CommonResponse, error) {
 	out := new(common.CommonResponse)
-	err := c.cc.Invoke(ctx, "/platform.RpcPlatformMessage/PlatformMessage", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/platform.RpcIotPlatformMessage/IotPlatformMessage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// RpcPlatformMessageServer is the server API for RpcPlatformMessage service.
-// All implementations must embed UnimplementedRpcPlatformMessageServer
+// RpcIotPlatformMessageServer is the server API for RpcIotPlatformMessage service.
+// All implementations must embed UnimplementedRpcIotPlatformMessageServer
 // for forward compatibility
-type RpcPlatformMessageServer interface {
+type RpcIotPlatformMessageServer interface {
 	// 云平台给网关发送消息入口
-	PlatformMessage(context.Context, *PlatformMessageRequest) (*common.CommonResponse, error)
-	mustEmbedUnimplementedRpcPlatformMessageServer()
+	IotPlatformMessage(context.Context, *PlatformMessageRequest) (*common.CommonResponse, error)
+	mustEmbedUnimplementedRpcIotPlatformMessageServer()
 }
 
-// UnimplementedRpcPlatformMessageServer must be embedded to have forward compatible implementations.
-type UnimplementedRpcPlatformMessageServer struct {
+// UnimplementedRpcIotPlatformMessageServer must be embedded to have forward compatible implementations.
+type UnimplementedRpcIotPlatformMessageServer struct {
 }
 
-func (UnimplementedRpcPlatformMessageServer) PlatformMessage(context.Context, *PlatformMessageRequest) (*common.CommonResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PlatformMessage not implemented")
+func (UnimplementedRpcIotPlatformMessageServer) IotPlatformMessage(context.Context, *PlatformMessageRequest) (*common.CommonResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IotPlatformMessage not implemented")
 }
-func (UnimplementedRpcPlatformMessageServer) mustEmbedUnimplementedRpcPlatformMessageServer() {}
+func (UnimplementedRpcIotPlatformMessageServer) mustEmbedUnimplementedRpcIotPlatformMessageServer() {}
 
-// UnsafeRpcPlatformMessageServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to RpcPlatformMessageServer will
+// UnsafeRpcIotPlatformMessageServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to RpcIotPlatformMessageServer will
 // result in compilation errors.
-type UnsafeRpcPlatformMessageServer interface {
-	mustEmbedUnimplementedRpcPlatformMessageServer()
+type UnsafeRpcIotPlatformMessageServer interface {
+	mustEmbedUnimplementedRpcIotPlatformMessageServer()
 }
 
-func RegisterRpcPlatformMessageServer(s grpc.ServiceRegistrar, srv RpcPlatformMessageServer) {
-	s.RegisterService(&RpcPlatformMessage_ServiceDesc, srv)
+func RegisterRpcIotPlatformMessageServer(s grpc.ServiceRegistrar, srv RpcIotPlatformMessageServer) {
+	s.RegisterService(&RpcIotPlatformMessage_ServiceDesc, srv)
 }
 
-func _RpcPlatformMessage_PlatformMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RpcIotPlatformMessage_IotPlatformMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PlatformMessageRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RpcPlatformMessageServer).PlatformMessage(ctx, in)
+		return srv.(RpcIotPlatformMessageServer).IotPlatformMessage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/platform.RpcPlatformMessage/PlatformMessage",
+		FullMethod: "/platform.RpcIotPlatformMessage/IotPlatformMessage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RpcPlatformMessageServer).PlatformMessage(ctx, req.(*PlatformMessageRequest))
+		return srv.(RpcIotPlatformMessageServer).IotPlatformMessage(ctx, req.(*PlatformMessageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// RpcPlatformMessage_ServiceDesc is the grpc.ServiceDesc for RpcPlatformMessage service.
+// RpcIotPlatformMessage_ServiceDesc is the grpc.ServiceDesc for RpcIotPlatformMessage service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var RpcPlatformMessage_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "platform.RpcPlatformMessage",
-	HandlerType: (*RpcPlatformMessageServer)(nil),
+var RpcIotPlatformMessage_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "platform.RpcIotPlatformMessage",
+	HandlerType: (*RpcIotPlatformMessageServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "PlatformMessage",
-			Handler:    _RpcPlatformMessage_PlatformMessage_Handler,
+			MethodName: "IotPlatformMessage",
+			Handler:    _RpcIotPlatformMessage_IotPlatformMessage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
