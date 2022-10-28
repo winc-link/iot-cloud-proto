@@ -12,16 +12,18 @@ enum messageType {
   Message = 3;//消息下发
   PropertyGet = 4;//属性查询
   Event = 5;//事件下发
+  Other = 9;//其他消息类型，如ota升级、日志上报、远程登入等等这这些消息不经过包装直接透传。
 }
 
 message PlatformMessageRequest {
   message MessageInfo {
     string topic = 1;
-    bytes payload = 2;
+    string message = 2;
   }
-  messageType messageType = 1;
-  string deviceId = 2;
-  MessageInfo messageInfo = 3;
+  common.IotPlatform IotPlatformName = 1;
+  messageType messageType = 2;
+  string deviceId = 3;
+  MessageInfo messageInfo = 4;
 }
 
 
