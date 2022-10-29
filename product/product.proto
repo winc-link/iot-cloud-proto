@@ -108,7 +108,7 @@ message Typespec {
 }
 
 message Properties {
-  string serviceId = 1;
+  string ModelName = 1;
   string productId = 2;
   string name = 3;
   string code = 4;
@@ -128,7 +128,7 @@ enum EventType{
 
 // events
 message Events {
-  string serviceId = 1;
+  string ModelName = 1;
   string productId = 2;
   string name = 3;
   string code = 4;
@@ -157,7 +157,7 @@ enum ActionsCallType {
 
 }
 message Actions {
-  string serviceId = 1;
+  string ModelName = 1;
   string productId = 2;
   string name = 3;
   string code = 4;
