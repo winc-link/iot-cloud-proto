@@ -145,7 +145,7 @@ message structSpec{
 message arraySpec {
   string size = 1;//数组长度
   message item {
-    DataType type =1;//数组内元素类型
+    DataType type =2;//数组内元素类型
   }
 }
 
