@@ -89,7 +89,7 @@ enum DataType {
   array = 7;
 }
 
-message Typespec {
+message Typespec2 {
   DataType type = 1;//设备属性的数据类型
   string min = 2;//设备属性的最小值
   string max = 3;//设备属性的最大值
@@ -106,6 +106,49 @@ message Typespec {
   map<string, string> bool = 18;//bool类型
   Item item = 15;//数组元素类型
 }
+
+message Typespec {
+  DataType type = 1;//设备属性的数据类型
+  bytes specs = 2;
+}
+
+message intSpec {
+  string min = 1;//设备属性的最小值
+  string max = 2;//设备属性的最大值
+  string step = 3;//设备属性的步长
+  string unit = 4;//属性单位
+  string unitName = 5;//单位名称
+}
+
+message textSpec {
+  string length = 1;
+}
+
+message dateSpec {
+
+}
+
+message boolSpec {
+  map<string, string> bool = 1;
+}
+
+message enumSpec{
+  map<string, string> bool = 1;
+}
+
+message structSpec{
+  string name = 1;
+  string code = 2;
+  Typespec typespec =3;
+}
+
+message arraySpec {
+  string size = 1;//数组长度
+  message item {
+    DataType type =1;//数组内元素类型
+  }
+}
+
 
 message Properties {
   string ModelName = 1;
