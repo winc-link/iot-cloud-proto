@@ -133,7 +133,7 @@ message boolSpec {
 }
 
 message enumSpec{
-  map<string, string> bool = 1;
+  map<string, string> eunm = 1;
 }
 
 message structSpec{
