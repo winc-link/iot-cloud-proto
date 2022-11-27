@@ -109,7 +109,7 @@ message Typespec2 {
 
 message Typespec {
   DataType type = 1;//设备属性的数据类型
-  bytes specs = 2;
+  string specs = 2;
 }
 
 message intSpec {
@@ -149,7 +149,7 @@ message arraySpec {
 
 
 message Properties {
-  string ModelName = 1;
+  string modelName = 1;
   string productId = 2;
   string name = 3;
   string code = 4;
@@ -157,7 +157,7 @@ message Properties {
   bool required = 9;
   AccessMode accessMode = 6;
   Typespec typeSpec = 7;
-  map<string, string> extra = 8;
+//  map<string, string> extra = 8;
 }
 
 enum EventType{

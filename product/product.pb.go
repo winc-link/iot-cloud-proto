@@ -947,7 +947,7 @@ type Typespec struct {
 	unknownFields protoimpl.UnknownFields
 
 	Type  DataType `protobuf:"varint,1,opt,name=type,proto3,enum=product.DataType" json:"type,omitempty"` //设备属性的数据类型
-	Specs []byte   `protobuf:"bytes,2,opt,name=specs,proto3" json:"specs,omitempty"`
+	Specs string   `protobuf:"bytes,2,opt,name=specs,proto3" json:"specs,omitempty"`
 }
 
 func (x *Typespec) Reset() {
@@ -989,11 +989,11 @@ func (x *Typespec) GetType() DataType {
 	return DataType_int
 }
 
-func (x *Typespec) GetSpecs() []byte {
+func (x *Typespec) GetSpecs() string {
 	if x != nil {
 		return x.Specs
 	}
-	return nil
+	return ""
 }
 
 type IntSpec struct {
@@ -1377,15 +1377,14 @@ type Properties struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ModelName   string            `protobuf:"bytes,1,opt,name=ModelName,proto3" json:"ModelName,omitempty"`
-	ProductId   string            `protobuf:"bytes,2,opt,name=productId,proto3" json:"productId,omitempty"`
-	Name        string            `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
-	Code        string            `protobuf:"bytes,4,opt,name=code,proto3" json:"code,omitempty"`
-	Description string            `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
-	Required    bool              `protobuf:"varint,9,opt,name=required,proto3" json:"required,omitempty"`
-	AccessMode  AccessMode        `protobuf:"varint,6,opt,name=accessMode,proto3,enum=product.AccessMode" json:"accessMode,omitempty"`
-	TypeSpec    *Typespec         `protobuf:"bytes,7,opt,name=typeSpec,proto3" json:"typeSpec,omitempty"`
-	Extra       map[string]string `protobuf:"bytes,8,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	ModelName   string     `protobuf:"bytes,1,opt,name=modelName,proto3" json:"modelName,omitempty"`
+	ProductId   string     `protobuf:"bytes,2,opt,name=productId,proto3" json:"productId,omitempty"`
+	Name        string     `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Code        string     `protobuf:"bytes,4,opt,name=code,proto3" json:"code,omitempty"`
+	Description string     `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
+	Required    bool       `protobuf:"varint,9,opt,name=required,proto3" json:"required,omitempty"`
+	AccessMode  AccessMode `protobuf:"varint,6,opt,name=accessMode,proto3,enum=product.AccessMode" json:"accessMode,omitempty"`
+	TypeSpec    *Typespec  `protobuf:"bytes,7,opt,name=typeSpec,proto3" json:"typeSpec,omitempty"` //  map<string, string> extra = 8;
 }
 
 func (x *Properties) Reset() {
@@ -1472,13 +1471,6 @@ func (x *Properties) GetAccessMode() AccessMode {
 func (x *Properties) GetTypeSpec() *Typespec {
 	if x != nil {
 		return x.TypeSpec
-	}
-	return nil
-}
-
-func (x *Properties) GetExtra() map[string]string {
-	if x != nil {
-		return x.Extra
 	}
 	return nil
 }
@@ -2080,7 +2072,7 @@ var file_product_product_proto_rawDesc = []byte{
 	0x65, 0x73, 0x70, 0x65, 0x63, 0x12, 0x25, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20,
 	0x01, 0x28, 0x0e, 0x32, 0x11, 0x2e, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x2e, 0x44, 0x61,
 	0x74, 0x61, 0x54, 0x79, 0x70, 0x65, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x14, 0x0a, 0x05,
-	0x73, 0x70, 0x65, 0x63, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x05, 0x73, 0x70, 0x65,
+	0x73, 0x70, 0x65, 0x63, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x73, 0x70, 0x65,
 	0x63, 0x73, 0x22, 0x71, 0x0a, 0x07, 0x69, 0x6e, 0x74, 0x53, 0x70, 0x65, 0x63, 0x12, 0x10, 0x0a,
 	0x03, 0x6d, 0x69, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x69, 0x6e, 0x12,
 	0x10, 0x0a, 0x03, 0x6d, 0x61, 0x78, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x61,
@@ -2116,9 +2108,9 @@ var file_product_product_proto_rawDesc = []byte{
 	0x70, 0x65, 0x63, 0x12, 0x12, 0x0a, 0x04, 0x73, 0x69, 0x7a, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
 	0x09, 0x52, 0x04, 0x73, 0x69, 0x7a, 0x65, 0x12, 0x21, 0x0a, 0x04, 0x69, 0x74, 0x65, 0x6d, 0x18,
 	0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0d, 0x2e, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x2e,
-	0x49, 0x74, 0x65, 0x6d, 0x52, 0x04, 0x69, 0x74, 0x65, 0x6d, 0x22, 0x82, 0x03, 0x0a, 0x0a, 0x50,
-	0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x69, 0x65, 0x73, 0x12, 0x1c, 0x0a, 0x09, 0x4d, 0x6f, 0x64,
-	0x65, 0x6c, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x4d, 0x6f,
+	0x49, 0x74, 0x65, 0x6d, 0x52, 0x04, 0x69, 0x74, 0x65, 0x6d, 0x22, 0x92, 0x02, 0x0a, 0x0a, 0x50,
+	0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x69, 0x65, 0x73, 0x12, 0x1c, 0x0a, 0x09, 0x6d, 0x6f, 0x64,
+	0x65, 0x6c, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6d, 0x6f,
 	0x64, 0x65, 0x6c, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x70, 0x72, 0x6f, 0x64, 0x75,
 	0x63, 0x74, 0x49, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x70, 0x72, 0x6f, 0x64,
 	0x75, 0x63, 0x74, 0x49, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20,
@@ -2133,14 +2125,7 @@ var file_product_product_proto_rawDesc = []byte{
 	0x4d, 0x6f, 0x64, 0x65, 0x52, 0x0a, 0x61, 0x63, 0x63, 0x65, 0x73, 0x73, 0x4d, 0x6f, 0x64, 0x65,
 	0x12, 0x2d, 0x0a, 0x08, 0x74, 0x79, 0x70, 0x65, 0x53, 0x70, 0x65, 0x63, 0x18, 0x07, 0x20, 0x01,
 	0x28, 0x0b, 0x32, 0x11, 0x2e, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x2e, 0x54, 0x79, 0x70,
-	0x65, 0x73, 0x70, 0x65, 0x63, 0x52, 0x08, 0x74, 0x79, 0x70, 0x65, 0x53, 0x70, 0x65, 0x63, 0x12,
-	0x34, 0x0a, 0x05, 0x65, 0x78, 0x74, 0x72, 0x61, 0x18, 0x08, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1e,
-	0x2e, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x2e, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74,
-	0x69, 0x65, 0x73, 0x2e, 0x45, 0x78, 0x74, 0x72, 0x61, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x05,
-	0x65, 0x78, 0x74, 0x72, 0x61, 0x1a, 0x38, 0x0a, 0x0a, 0x45, 0x78, 0x74, 0x72, 0x61, 0x45, 0x6e,
-	0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22,
+	0x65, 0x73, 0x70, 0x65, 0x63, 0x52, 0x08, 0x74, 0x79, 0x70, 0x65, 0x53, 0x70, 0x65, 0x63, 0x22,
 	0xf9, 0x02, 0x0a, 0x06, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x12, 0x1c, 0x0a, 0x09, 0x4d, 0x6f,
 	0x64, 0x65, 0x6c, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x4d,
 	0x6f, 0x64, 0x65, 0x6c, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x70, 0x72, 0x6f, 0x64,
@@ -2264,7 +2249,7 @@ func file_product_product_proto_rawDescGZIP() []byte {
 }
 
 var file_product_product_proto_enumTypes = make([]protoimpl.EnumInfo, 6)
-var file_product_product_proto_msgTypes = make([]protoimpl.MessageInfo, 31)
+var file_product_product_proto_msgTypes = make([]protoimpl.MessageInfo, 30)
 var file_product_product_proto_goTypes = []interface{}{
 	(ProductNodeType)(0),                  // 0: product.ProductNodeType
 	(ProductNetType)(0),                   // 1: product.ProductNetType
@@ -2300,16 +2285,15 @@ var file_product_product_proto_goTypes = []interface{}{
 	nil,                                   // 31: product.Typespec2.BoolEntry
 	nil,                                   // 32: product.boolSpec.BoolEntry
 	nil,                                   // 33: product.enumSpec.EunmEntry
-	nil,                                   // 34: product.Properties.ExtraEntry
-	nil,                                   // 35: product.Events.ExtraEntry
-	nil,                                   // 36: product.Actions.ExtraEntry
-	(common.IotPlatform)(0),               // 37: common.IotPlatform
-	(*anypb.Any)(nil),                     // 38: google.protobuf.Any
+	nil,                                   // 34: product.Events.ExtraEntry
+	nil,                                   // 35: product.Actions.ExtraEntry
+	(common.IotPlatform)(0),               // 36: common.IotPlatform
+	(*anypb.Any)(nil),                     // 37: google.protobuf.Any
 }
 var file_product_product_proto_depIdxs = []int32{
 	26, // 0: product.QueryProductListRequest.extra:type_name -> product.QueryProductListRequest.ExtraEntry
 	0,  // 1: product.Productinfo.NodeType:type_name -> product.ProductNodeType
-	37, // 2: product.Productinfo.Platform:type_name -> common.IotPlatform
+	36, // 2: product.Productinfo.Platform:type_name -> common.IotPlatform
 	1,  // 3: product.Productinfo.NetType:type_name -> product.ProductNetType
 	21, // 4: product.Productinfo.properties:type_name -> product.Properties
 	22, // 5: product.Productinfo.events:type_name -> product.Events
@@ -2321,7 +2305,7 @@ var file_product_product_proto_depIdxs = []int32{
 	3,  // 11: product.Typespec2.type:type_name -> product.DataType
 	30, // 12: product.Typespec2.range:type_name -> product.Typespec2.RangeEntry
 	21, // 13: product.Typespec2.struct:type_name -> product.Properties
-	38, // 14: product.Typespec2.defaultValue:type_name -> google.protobuf.Any
+	37, // 14: product.Typespec2.defaultValue:type_name -> google.protobuf.Any
 	31, // 15: product.Typespec2.bool:type_name -> product.Typespec2.BoolEntry
 	11, // 16: product.Typespec2.item:type_name -> product.Item
 	3,  // 17: product.Typespec.type:type_name -> product.DataType
@@ -2331,27 +2315,26 @@ var file_product_product_proto_depIdxs = []int32{
 	11, // 21: product.arraySpec.item:type_name -> product.Item
 	2,  // 22: product.Properties.accessMode:type_name -> product.AccessMode
 	13, // 23: product.Properties.typeSpec:type_name -> product.Typespec
-	34, // 24: product.Properties.extra:type_name -> product.Properties.ExtraEntry
-	4,  // 25: product.Events.type:type_name -> product.EventType
-	24, // 26: product.Events.OutputParams:type_name -> product.OutputParams
-	35, // 27: product.Events.extra:type_name -> product.Events.ExtraEntry
-	13, // 28: product.InputParams.typeSpec:type_name -> product.Typespec
-	13, // 29: product.OutputParams.typeSpec:type_name -> product.Typespec
-	5,  // 30: product.Actions.callType:type_name -> product.ActionsCallType
-	23, // 31: product.Actions.InputParams:type_name -> product.InputParams
-	24, // 32: product.Actions.OutputParams:type_name -> product.OutputParams
-	36, // 33: product.Actions.extra:type_name -> product.Actions.ExtraEntry
-	7,  // 34: product.QueryProductListResponse.List.ProductInfo:type_name -> product.Productinfo
-	28, // 35: product.QueryProductListResponse.Data.List:type_name -> product.QueryProductListResponse.List
-	6,  // 36: product.RpcProduct.QueryProductList:input_type -> product.QueryProductListRequest
-	9,  // 37: product.RpcProduct.QueryProduct:input_type -> product.QueryProductRequest
-	8,  // 38: product.RpcProduct.QueryProductList:output_type -> product.QueryProductListResponse
-	10, // 39: product.RpcProduct.QueryProduct:output_type -> product.QueryProductResponse
-	38, // [38:40] is the sub-list for method output_type
-	36, // [36:38] is the sub-list for method input_type
-	36, // [36:36] is the sub-list for extension type_name
-	36, // [36:36] is the sub-list for extension extendee
-	0,  // [0:36] is the sub-list for field type_name
+	4,  // 24: product.Events.type:type_name -> product.EventType
+	24, // 25: product.Events.OutputParams:type_name -> product.OutputParams
+	34, // 26: product.Events.extra:type_name -> product.Events.ExtraEntry
+	13, // 27: product.InputParams.typeSpec:type_name -> product.Typespec
+	13, // 28: product.OutputParams.typeSpec:type_name -> product.Typespec
+	5,  // 29: product.Actions.callType:type_name -> product.ActionsCallType
+	23, // 30: product.Actions.InputParams:type_name -> product.InputParams
+	24, // 31: product.Actions.OutputParams:type_name -> product.OutputParams
+	35, // 32: product.Actions.extra:type_name -> product.Actions.ExtraEntry
+	7,  // 33: product.QueryProductListResponse.List.ProductInfo:type_name -> product.Productinfo
+	28, // 34: product.QueryProductListResponse.Data.List:type_name -> product.QueryProductListResponse.List
+	6,  // 35: product.RpcProduct.QueryProductList:input_type -> product.QueryProductListRequest
+	9,  // 36: product.RpcProduct.QueryProduct:input_type -> product.QueryProductRequest
+	8,  // 37: product.RpcProduct.QueryProductList:output_type -> product.QueryProductListResponse
+	10, // 38: product.RpcProduct.QueryProduct:output_type -> product.QueryProductResponse
+	37, // [37:39] is the sub-list for method output_type
+	35, // [35:37] is the sub-list for method input_type
+	35, // [35:35] is the sub-list for extension type_name
+	35, // [35:35] is the sub-list for extension extendee
+	0,  // [0:35] is the sub-list for field type_name
 }
 
 func init() { file_product_product_proto_init() }
@@ -2631,7 +2614,7 @@ func file_product_product_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_product_product_proto_rawDesc,
 			NumEnums:      6,
-			NumMessages:   31,
+			NumMessages:   30,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
