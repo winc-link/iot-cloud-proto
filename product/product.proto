@@ -75,7 +75,7 @@ enum AccessMode {
 }
 
 message Item {
-  DataType type = 1;
+  string type = 1;
 }
 
 enum DataType {
