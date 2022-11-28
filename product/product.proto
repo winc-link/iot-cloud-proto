@@ -79,14 +79,14 @@ message Item {
 }
 
 enum DataType {
-  int = 0;
-  float = 1;
-  text = 2;
-  date = 3;
-  bool = 4;
-  enum = 5;
-  struct = 6;
-  array = 7;
+  INT = 0;
+  FLOAT = 1;
+  TEXT = 2;
+  DATE = 3;
+  BOOL = 4;
+  ENUM = 5;
+  STRUCT = 6;
+  ARRAY = 7;
 }
 
 message Typespec2 {
@@ -108,7 +108,7 @@ message Typespec2 {
 }
 
 message Typespec {
-  DataType type = 1;//设备属性的数据类型
+  string type = 1;//设备属性的数据类型
   string specs = 2;
 }
 
