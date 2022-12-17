@@ -3,7 +3,7 @@ syntax = "proto3";
 package product;
 option go_package = "github.com/winc-link/iot-cloud-proto/product";
 import "common/common.proto";
-import "google/protobuf/any.proto";
+//import "google/protobuf/any.proto";
 
 
 message QueryProductListRequest{
@@ -89,24 +89,6 @@ enum DataType {
   ARRAY = 7;
 }
 
-message Typespec2 {
-  DataType type = 1;//设备属性的数据类型
-  string min = 2;//设备属性的最小值
-  string max = 3;//设备属性的最大值
-  string step = 4;//设备属性的步长
-  string unit = 5;//属性单位
-  string unitName = 16;//单位名称
-  string scale = 6;//缩放
-  string maxlen = 7;//设备属性的最大长度
-  map<string, string> range = 9;//设备属性的枚举值列表
-  repeated Properties struct = 17;//JSON对象
-  repeated string lable = 10;//故障类型
-  google.protobuf.Any defaultValue = 11;//默认值
-  bool required = 12;//设备属性是否必选
-  map<string, string> bool = 18;//bool类型
-  Item item = 15;//数组元素类型
-}
-
 message Typespec {
   string type = 1;//设备属性的数据类型
   string specs = 2;
@@ -144,7 +126,8 @@ message structSpec{
 
 message arraySpec {
   string size = 1;//数组长度
-  Item item = 2;
+  string type = 2;//设备属性的数据类型
+  string specs = 3;
 }
 
 
