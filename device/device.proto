@@ -109,6 +109,7 @@ message DeviceInfo {
   string description = 6;
   DeviceNodeType NodeType = 7;
   map<string, string> extra = 8;
+  common.IotPlatform Platform = 10; //平台名称
 }
 
 message QueryDeviceListResponse {
