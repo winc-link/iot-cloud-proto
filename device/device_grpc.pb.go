@@ -8,7 +8,6 @@ package device
 
 import (
 	context "context"
-	common "github.com/winc-link/iot-cloud-proto/common"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -26,13 +25,13 @@ type RpcDeviceClient interface {
 	//设备连接云服务
 	ConnectIotCloud(ctx context.Context, in *ConnectIotCloudRequest, opts ...grpc.CallOption) (*ConnectIotCloudResponse, error)
 	// 设备断开链接
-	CloseConnectIotCloud(ctx context.Context, in *CloseConnectIotCloudRequest, opts ...grpc.CallOption) (*common.CommonResponse, error)
+	CloseConnectIotCloud(ctx context.Context, in *CloseConnectIotCloudRequest, opts ...grpc.CallOption) (*CloseConnectIotCloudResponse, error)
+	// 查询设备连接状态
+	GetDeviceConnectStatus(ctx context.Context, in *GetDeviceConnectStatusRequest, opts ...grpc.CallOption) (*GetDeviceConnectStatusResponse, error)
 	// 查询指定设备的详细信息
 	QueryDeviceDetail(ctx context.Context, in *QueryDeviceDetailRequest, opts ...grpc.CallOption) (*QueryDeviceDetailResponse, error)
 	//查询所有设备
 	QueryDeviceList(ctx context.Context, in *QueryDeviceListRequest, opts ...grpc.CallOption) (*QueryDeviceListResponse, error)
-	// 查询设备连接状态
-	GetDeviceConnectStatus(ctx context.Context, in *GetDeviceConnectStatusRequest, opts ...grpc.CallOption) (*GetDeviceConnectStatusResponse, error)
 	// 添加设备
 	RegisterDevice(ctx context.Context, in *RegisterDeviceRequest, opts ...grpc.CallOption) (*RegisterDeviceResponse, error)
 }
@@ -54,9 +53,18 @@ func (c *rpcDeviceClient) ConnectIotCloud(ctx context.Context, in *ConnectIotClo
 	return out, nil
 }
 
-func (c *rpcDeviceClient) CloseConnectIotCloud(ctx context.Context, in *CloseConnectIotCloudRequest, opts ...grpc.CallOption) (*common.CommonResponse, error) {
-	out := new(common.CommonResponse)
+func (c *rpcDeviceClient) CloseConnectIotCloud(ctx context.Context, in *CloseConnectIotCloudRequest, opts ...grpc.CallOption) (*CloseConnectIotCloudResponse, error) {
+	out := new(CloseConnectIotCloudResponse)
 	err := c.cc.Invoke(ctx, "/device.RpcDevice/CloseConnectIotCloud", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *rpcDeviceClient) GetDeviceConnectStatus(ctx context.Context, in *GetDeviceConnectStatusRequest, opts ...grpc.CallOption) (*GetDeviceConnectStatusResponse, error) {
+	out := new(GetDeviceConnectStatusResponse)
+	err := c.cc.Invoke(ctx, "/device.RpcDevice/GetDeviceConnectStatus", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -81,15 +89,6 @@ func (c *rpcDeviceClient) QueryDeviceList(ctx context.Context, in *QueryDeviceLi
 	return out, nil
 }
 
-func (c *rpcDeviceClient) GetDeviceConnectStatus(ctx context.Context, in *GetDeviceConnectStatusRequest, opts ...grpc.CallOption) (*GetDeviceConnectStatusResponse, error) {
-	out := new(GetDeviceConnectStatusResponse)
-	err := c.cc.Invoke(ctx, "/device.RpcDevice/GetDeviceConnectStatus", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *rpcDeviceClient) RegisterDevice(ctx context.Context, in *RegisterDeviceRequest, opts ...grpc.CallOption) (*RegisterDeviceResponse, error) {
 	out := new(RegisterDeviceResponse)
 	err := c.cc.Invoke(ctx, "/device.RpcDevice/RegisterDevice", in, out, opts...)
@@ -106,13 +105,13 @@ type RpcDeviceServer interface {
 	//设备连接云服务
 	ConnectIotCloud(context.Context, *ConnectIotCloudRequest) (*ConnectIotCloudResponse, error)
 	// 设备断开链接
-	CloseConnectIotCloud(context.Context, *CloseConnectIotCloudRequest) (*common.CommonResponse, error)
+	CloseConnectIotCloud(context.Context, *CloseConnectIotCloudRequest) (*CloseConnectIotCloudResponse, error)
+	// 查询设备连接状态
+	GetDeviceConnectStatus(context.Context, *GetDeviceConnectStatusRequest) (*GetDeviceConnectStatusResponse, error)
 	// 查询指定设备的详细信息
 	QueryDeviceDetail(context.Context, *QueryDeviceDetailRequest) (*QueryDeviceDetailResponse, error)
 	//查询所有设备
 	QueryDeviceList(context.Context, *QueryDeviceListRequest) (*QueryDeviceListResponse, error)
-	// 查询设备连接状态
-	GetDeviceConnectStatus(context.Context, *GetDeviceConnectStatusRequest) (*GetDeviceConnectStatusResponse, error)
 	// 添加设备
 	RegisterDevice(context.Context, *RegisterDeviceRequest) (*RegisterDeviceResponse, error)
 	mustEmbedUnimplementedRpcDeviceServer()
@@ -125,17 +124,17 @@ type UnimplementedRpcDeviceServer struct {
 func (UnimplementedRpcDeviceServer) ConnectIotCloud(context.Context, *ConnectIotCloudRequest) (*ConnectIotCloudResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ConnectIotCloud not implemented")
 }
-func (UnimplementedRpcDeviceServer) CloseConnectIotCloud(context.Context, *CloseConnectIotCloudRequest) (*common.CommonResponse, error) {
+func (UnimplementedRpcDeviceServer) CloseConnectIotCloud(context.Context, *CloseConnectIotCloudRequest) (*CloseConnectIotCloudResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CloseConnectIotCloud not implemented")
+}
+func (UnimplementedRpcDeviceServer) GetDeviceConnectStatus(context.Context, *GetDeviceConnectStatusRequest) (*GetDeviceConnectStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDeviceConnectStatus not implemented")
 }
 func (UnimplementedRpcDeviceServer) QueryDeviceDetail(context.Context, *QueryDeviceDetailRequest) (*QueryDeviceDetailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryDeviceDetail not implemented")
 }
 func (UnimplementedRpcDeviceServer) QueryDeviceList(context.Context, *QueryDeviceListRequest) (*QueryDeviceListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryDeviceList not implemented")
-}
-func (UnimplementedRpcDeviceServer) GetDeviceConnectStatus(context.Context, *GetDeviceConnectStatusRequest) (*GetDeviceConnectStatusResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetDeviceConnectStatus not implemented")
 }
 func (UnimplementedRpcDeviceServer) RegisterDevice(context.Context, *RegisterDeviceRequest) (*RegisterDeviceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RegisterDevice not implemented")
@@ -189,6 +188,24 @@ func _RpcDevice_CloseConnectIotCloud_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RpcDevice_GetDeviceConnectStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDeviceConnectStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RpcDeviceServer).GetDeviceConnectStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/device.RpcDevice/GetDeviceConnectStatus",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RpcDeviceServer).GetDeviceConnectStatus(ctx, req.(*GetDeviceConnectStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _RpcDevice_QueryDeviceDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(QueryDeviceDetailRequest)
 	if err := dec(in); err != nil {
@@ -221,24 +238,6 @@ func _RpcDevice_QueryDeviceList_Handler(srv interface{}, ctx context.Context, de
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RpcDeviceServer).QueryDeviceList(ctx, req.(*QueryDeviceListRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _RpcDevice_GetDeviceConnectStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetDeviceConnectStatusRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RpcDeviceServer).GetDeviceConnectStatus(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/device.RpcDevice/GetDeviceConnectStatus",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RpcDeviceServer).GetDeviceConnectStatus(ctx, req.(*GetDeviceConnectStatusRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -277,16 +276,16 @@ var RpcDevice_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _RpcDevice_CloseConnectIotCloud_Handler,
 		},
 		{
+			MethodName: "GetDeviceConnectStatus",
+			Handler:    _RpcDevice_GetDeviceConnectStatus_Handler,
+		},
+		{
 			MethodName: "QueryDeviceDetail",
 			Handler:    _RpcDevice_QueryDeviceDetail_Handler,
 		},
 		{
 			MethodName: "QueryDeviceList",
 			Handler:    _RpcDevice_QueryDeviceList_Handler,
-		},
-		{
-			MethodName: "GetDeviceConnectStatus",
-			Handler:    _RpcDevice_GetDeviceConnectStatus_Handler,
 		},
 		{
 			MethodName: "RegisterDevice",
