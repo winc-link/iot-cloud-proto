@@ -24,7 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RpcDeviceClient interface {
 	//设备连接云服务
-	ConnectIotCloud(ctx context.Context, in *ConnectIotCloudRequest, opts ...grpc.CallOption) (*common.CommonResponse, error)
+	ConnectIotCloud(ctx context.Context, in *ConnectIotCloudRequest, opts ...grpc.CallOption) (*ConnectIotCloudResponse, error)
 	// 设备断开链接
 	CloseConnectIotCloud(ctx context.Context, in *CloseConnectIotCloudRequest, opts ...grpc.CallOption) (*common.CommonResponse, error)
 	// 查询指定设备的详细信息
@@ -45,8 +45,8 @@ func NewRpcDeviceClient(cc grpc.ClientConnInterface) RpcDeviceClient {
 	return &rpcDeviceClient{cc}
 }
 
-func (c *rpcDeviceClient) ConnectIotCloud(ctx context.Context, in *ConnectIotCloudRequest, opts ...grpc.CallOption) (*common.CommonResponse, error) {
-	out := new(common.CommonResponse)
+func (c *rpcDeviceClient) ConnectIotCloud(ctx context.Context, in *ConnectIotCloudRequest, opts ...grpc.CallOption) (*ConnectIotCloudResponse, error) {
+	out := new(ConnectIotCloudResponse)
 	err := c.cc.Invoke(ctx, "/device.RpcDevice/ConnectIotCloud", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -104,7 +104,7 @@ func (c *rpcDeviceClient) RegisterDevice(ctx context.Context, in *RegisterDevice
 // for forward compatibility
 type RpcDeviceServer interface {
 	//设备连接云服务
-	ConnectIotCloud(context.Context, *ConnectIotCloudRequest) (*common.CommonResponse, error)
+	ConnectIotCloud(context.Context, *ConnectIotCloudRequest) (*ConnectIotCloudResponse, error)
 	// 设备断开链接
 	CloseConnectIotCloud(context.Context, *CloseConnectIotCloudRequest) (*common.CommonResponse, error)
 	// 查询指定设备的详细信息
@@ -122,7 +122,7 @@ type RpcDeviceServer interface {
 type UnimplementedRpcDeviceServer struct {
 }
 
-func (UnimplementedRpcDeviceServer) ConnectIotCloud(context.Context, *ConnectIotCloudRequest) (*common.CommonResponse, error) {
+func (UnimplementedRpcDeviceServer) ConnectIotCloud(context.Context, *ConnectIotCloudRequest) (*ConnectIotCloudResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ConnectIotCloud not implemented")
 }
 func (UnimplementedRpcDeviceServer) CloseConnectIotCloud(context.Context, *CloseConnectIotCloudRequest) (*common.CommonResponse, error) {

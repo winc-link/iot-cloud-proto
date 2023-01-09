@@ -125,7 +125,7 @@ message QueryDeviceListResponse {
 
 service RpcDevice {
   //设备连接云服务
-  rpc ConnectIotCloud(ConnectIotCloudRequest) returns (common.CommonResponse) {}
+  rpc ConnectIotCloud(ConnectIotCloudRequest) returns (ConnectIotCloudResponse) {}
   // 设备断开链接
   rpc CloseConnectIotCloud(CloseConnectIotCloudRequest) returns (common.CommonResponse) {}
   // 查询指定设备的详细信息
