@@ -17,6 +17,14 @@ message ConnectIotCloudRequest {
   map<string, string> extra =3;
 }
 
+message ConnectIotCloudResponse {
+  common.CommonResponse baseResponse = 1;
+  message Data {
+    ConnectStatus Status = 1;
+  }
+  Data data = 2;
+}
+
 message CloseConnectIotCloudRequest {
   repeated string deviceIds = 1;
 }
