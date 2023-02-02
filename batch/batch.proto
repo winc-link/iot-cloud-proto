@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package batch;
+option go_package = "github.com/winc-link/iot-cloud-proto/batch";
+import "common/common.proto";
+
+
+message DeviceBatchReportRequest {
+  string data = 2;
+  string deviceId = 3;
+  string productId = 4;
+}
+
+service RpcProperty {
+  //设备批量上报
+  rpc DeviceBatchReport(DeviceBatchReportRequest) returns (common.CommonResponse) {}
+}
