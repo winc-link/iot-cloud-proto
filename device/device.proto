@@ -17,8 +17,24 @@ message ConnectIotCloudRequest {
   map<string, string> extra =3;
 }
 
+message ConnectIotCloudResponse {
+  common.CommonResponse baseResponse = 1;
+  message Data {
+    ConnectStatus Status = 1;
+  }
+  Data data = 2;
+}
+
 message CloseConnectIotCloudRequest {
   repeated string deviceIds = 1;
+}
+
+message CloseConnectIotCloudResponse {
+  common.CommonResponse baseResponse = 1;
+  message Data {
+    ConnectStatus Status = 1;
+  }
+  Data data = 2;
 }
 
 message QueryDeviceDetailRequest {
@@ -45,14 +61,10 @@ enum ConnectStatus {
 message GetDeviceConnectStatusResponse {
   message Data {
     ConnectStatus Status = 1;
-    uint64 Timestamp = 2;
   }
 
-  Data data = 1;
-  string RequestId = 2;
-  string Code = 3;
-  bool Success = 4;
-  string errorMessage = 5;
+  Data data = 2;
+  common.CommonResponse baseResponse = 1;
 }
 
 message RegisterDeviceRequest {
@@ -97,6 +109,7 @@ message DeviceInfo {
   string description = 6;
   DeviceNodeType NodeType = 7;
   map<string, string> extra = 8;
+  common.IotPlatform Platform = 10; //平台名称
 }
 
 message QueryDeviceListResponse {
@@ -117,15 +130,15 @@ message QueryDeviceListResponse {
 
 service RpcDevice {
   //设备连接云服务
-  rpc ConnectIotCloud(ConnectIotCloudRequest) returns (common.CommonResponse) {}
+  rpc ConnectIotCloud(ConnectIotCloudRequest) returns (ConnectIotCloudResponse) {}
   // 设备断开链接
-  rpc CloseConnectIotCloud(CloseConnectIotCloudRequest) returns (common.CommonResponse) {}
+  rpc CloseConnectIotCloud(CloseConnectIotCloudRequest) returns (CloseConnectIotCloudResponse) {}
+  // 查询设备连接状态
+  rpc GetDeviceConnectStatus (GetDeviceConnectStatusRequest) returns(GetDeviceConnectStatusResponse){}
   // 查询指定设备的详细信息
   rpc QueryDeviceDetail(QueryDeviceDetailRequest) returns (QueryDeviceDetailResponse) {}
   //查询所有设备
   rpc QueryDeviceList(QueryDeviceListRequest) returns (QueryDeviceListResponse) {}
-  // 查询设备连接状态
-  rpc GetDeviceConnectStatus (GetDeviceConnectStatusRequest) returns(GetDeviceConnectStatusResponse){}
   // 添加设备
   rpc RegisterDevice (RegisterDeviceRequest) returns (RegisterDeviceResponse) {}
   // 删除设备
