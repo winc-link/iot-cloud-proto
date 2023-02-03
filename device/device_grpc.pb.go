@@ -8,6 +8,7 @@ package device
 
 import (
 	context "context"
+	common "github.com/winc-link/iot-cloud-proto/common"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -34,6 +35,12 @@ type RpcDeviceClient interface {
 	QueryDeviceList(ctx context.Context, in *QueryDeviceListRequest, opts ...grpc.CallOption) (*QueryDeviceListResponse, error)
 	// 添加设备
 	RegisterDevice(ctx context.Context, in *RegisterDeviceRequest, opts ...grpc.CallOption) (*RegisterDeviceResponse, error)
+	// 删除设备
+	//  rpc RegisterDevice (RegisterDeviceRequest) returns (RegisterDeviceResponse) {}
+	// 平台自定义消息推Public
+	PlatformCustomPublish(ctx context.Context, in *PlatformCustomPublishRequest, opts ...grpc.CallOption) (*common.CommonResponse, error)
+	// 平台自定义消息UnSubscribe
+	PlatformCustomUnSubscribe(ctx context.Context, in *PlatformCustomUnSubscribeRequest, opts ...grpc.CallOption) (*common.CommonResponse, error)
 }
 
 type rpcDeviceClient struct {
@@ -98,6 +105,24 @@ func (c *rpcDeviceClient) RegisterDevice(ctx context.Context, in *RegisterDevice
 	return out, nil
 }
 
+func (c *rpcDeviceClient) PlatformCustomPublish(ctx context.Context, in *PlatformCustomPublishRequest, opts ...grpc.CallOption) (*common.CommonResponse, error) {
+	out := new(common.CommonResponse)
+	err := c.cc.Invoke(ctx, "/device.RpcDevice/PlatformCustomPublish", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *rpcDeviceClient) PlatformCustomUnSubscribe(ctx context.Context, in *PlatformCustomUnSubscribeRequest, opts ...grpc.CallOption) (*common.CommonResponse, error) {
+	out := new(common.CommonResponse)
+	err := c.cc.Invoke(ctx, "/device.RpcDevice/PlatformCustomUnSubscribe", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RpcDeviceServer is the server API for RpcDevice service.
 // All implementations must embed UnimplementedRpcDeviceServer
 // for forward compatibility
@@ -114,6 +139,12 @@ type RpcDeviceServer interface {
 	QueryDeviceList(context.Context, *QueryDeviceListRequest) (*QueryDeviceListResponse, error)
 	// 添加设备
 	RegisterDevice(context.Context, *RegisterDeviceRequest) (*RegisterDeviceResponse, error)
+	// 删除设备
+	//  rpc RegisterDevice (RegisterDeviceRequest) returns (RegisterDeviceResponse) {}
+	// 平台自定义消息推Public
+	PlatformCustomPublish(context.Context, *PlatformCustomPublishRequest) (*common.CommonResponse, error)
+	// 平台自定义消息UnSubscribe
+	PlatformCustomUnSubscribe(context.Context, *PlatformCustomUnSubscribeRequest) (*common.CommonResponse, error)
 	mustEmbedUnimplementedRpcDeviceServer()
 }
 
@@ -138,6 +169,12 @@ func (UnimplementedRpcDeviceServer) QueryDeviceList(context.Context, *QueryDevic
 }
 func (UnimplementedRpcDeviceServer) RegisterDevice(context.Context, *RegisterDeviceRequest) (*RegisterDeviceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RegisterDevice not implemented")
+}
+func (UnimplementedRpcDeviceServer) PlatformCustomPublish(context.Context, *PlatformCustomPublishRequest) (*common.CommonResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PlatformCustomPublish not implemented")
+}
+func (UnimplementedRpcDeviceServer) PlatformCustomUnSubscribe(context.Context, *PlatformCustomUnSubscribeRequest) (*common.CommonResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PlatformCustomUnSubscribe not implemented")
 }
 func (UnimplementedRpcDeviceServer) mustEmbedUnimplementedRpcDeviceServer() {}
 
@@ -260,6 +297,42 @@ func _RpcDevice_RegisterDevice_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RpcDevice_PlatformCustomPublish_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PlatformCustomPublishRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RpcDeviceServer).PlatformCustomPublish(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/device.RpcDevice/PlatformCustomPublish",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RpcDeviceServer).PlatformCustomPublish(ctx, req.(*PlatformCustomPublishRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RpcDevice_PlatformCustomUnSubscribe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PlatformCustomUnSubscribeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RpcDeviceServer).PlatformCustomUnSubscribe(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/device.RpcDevice/PlatformCustomUnSubscribe",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RpcDeviceServer).PlatformCustomUnSubscribe(ctx, req.(*PlatformCustomUnSubscribeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // RpcDevice_ServiceDesc is the grpc.ServiceDesc for RpcDevice service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -290,6 +363,14 @@ var RpcDevice_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RegisterDevice",
 			Handler:    _RpcDevice_RegisterDevice_Handler,
+		},
+		{
+			MethodName: "PlatformCustomPublish",
+			Handler:    _RpcDevice_PlatformCustomPublish_Handler,
+		},
+		{
+			MethodName: "PlatformCustomUnSubscribe",
+			Handler:    _RpcDevice_PlatformCustomUnSubscribe_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
