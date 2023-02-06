@@ -18,12 +18,8 @@ enum messageType {
 
 message PlatformMessageRequest {
   message MessageInfo {
-    bool duplicate = 1;
-    int32 qos = 2;
-    bool retained = 3;
-    string topic = 4;
-    uint32 messageID = 5;
-    string payload = 6;
+    string topic = 1;
+    string message = 2;
   }
   common.IotPlatform IotPlatformName = 1;
   messageType messageType = 2;
@@ -53,8 +49,9 @@ message PlatformCustomUnSubscribeRequest {
 }
 
 message PlatformCustomSubscribeRequest {
-  string topic = 1;
-  int32 qos = 2;
+  string deviceId = 1;
+  string topic = 2;
+  int32 qos = 3;
 }
 
 // 自定义mqtt消息入口
