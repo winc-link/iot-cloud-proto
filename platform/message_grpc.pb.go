@@ -107,10 +107,10 @@ var RpcIotPlatformMessage_ServiceDesc = grpc.ServiceDesc{
 	Metadata: "platform/message.proto",
 }
 
-// RpcDriverMessageClient is the client API for RpcDriverMessage service.
+// RpcCustomMqttMessageClient is the client API for RpcCustomMqttMessage service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type RpcDriverMessageClient interface {
+type RpcCustomMqttMessageClient interface {
 	// 平台自定义消息推Public
 	PlatformCustomPublish(ctx context.Context, in *PlatformCustomPublishRequest, opts ...grpc.CallOption) (*common.CommonResponse, error)
 	// 平台自定义消息推Subscribe
@@ -119,152 +119,152 @@ type RpcDriverMessageClient interface {
 	PlatformCustomUnSubscribe(ctx context.Context, in *PlatformCustomUnSubscribeRequest, opts ...grpc.CallOption) (*common.CommonResponse, error)
 }
 
-type rpcDriverMessageClient struct {
+type rpcCustomMqttMessageClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewRpcDriverMessageClient(cc grpc.ClientConnInterface) RpcDriverMessageClient {
-	return &rpcDriverMessageClient{cc}
+func NewRpcCustomMqttMessageClient(cc grpc.ClientConnInterface) RpcCustomMqttMessageClient {
+	return &rpcCustomMqttMessageClient{cc}
 }
 
-func (c *rpcDriverMessageClient) PlatformCustomPublish(ctx context.Context, in *PlatformCustomPublishRequest, opts ...grpc.CallOption) (*common.CommonResponse, error) {
+func (c *rpcCustomMqttMessageClient) PlatformCustomPublish(ctx context.Context, in *PlatformCustomPublishRequest, opts ...grpc.CallOption) (*common.CommonResponse, error) {
 	out := new(common.CommonResponse)
-	err := c.cc.Invoke(ctx, "/platform.RpcDriverMessage/PlatformCustomPublish", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/platform.RpcCustomMqttMessage/PlatformCustomPublish", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *rpcDriverMessageClient) PlatformCustomSubscribe(ctx context.Context, in *PlatformCustomSubscribeRequest, opts ...grpc.CallOption) (*common.CommonResponse, error) {
+func (c *rpcCustomMqttMessageClient) PlatformCustomSubscribe(ctx context.Context, in *PlatformCustomSubscribeRequest, opts ...grpc.CallOption) (*common.CommonResponse, error) {
 	out := new(common.CommonResponse)
-	err := c.cc.Invoke(ctx, "/platform.RpcDriverMessage/PlatformCustomSubscribe", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/platform.RpcCustomMqttMessage/PlatformCustomSubscribe", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *rpcDriverMessageClient) PlatformCustomUnSubscribe(ctx context.Context, in *PlatformCustomUnSubscribeRequest, opts ...grpc.CallOption) (*common.CommonResponse, error) {
+func (c *rpcCustomMqttMessageClient) PlatformCustomUnSubscribe(ctx context.Context, in *PlatformCustomUnSubscribeRequest, opts ...grpc.CallOption) (*common.CommonResponse, error) {
 	out := new(common.CommonResponse)
-	err := c.cc.Invoke(ctx, "/platform.RpcDriverMessage/PlatformCustomUnSubscribe", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/platform.RpcCustomMqttMessage/PlatformCustomUnSubscribe", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// RpcDriverMessageServer is the server API for RpcDriverMessage service.
-// All implementations must embed UnimplementedRpcDriverMessageServer
+// RpcCustomMqttMessageServer is the server API for RpcCustomMqttMessage service.
+// All implementations must embed UnimplementedRpcCustomMqttMessageServer
 // for forward compatibility
-type RpcDriverMessageServer interface {
+type RpcCustomMqttMessageServer interface {
 	// 平台自定义消息推Public
 	PlatformCustomPublish(context.Context, *PlatformCustomPublishRequest) (*common.CommonResponse, error)
 	// 平台自定义消息推Subscribe
 	PlatformCustomSubscribe(context.Context, *PlatformCustomSubscribeRequest) (*common.CommonResponse, error)
 	// 平台自定义消息UnSubscribe
 	PlatformCustomUnSubscribe(context.Context, *PlatformCustomUnSubscribeRequest) (*common.CommonResponse, error)
-	mustEmbedUnimplementedRpcDriverMessageServer()
+	mustEmbedUnimplementedRpcCustomMqttMessageServer()
 }
 
-// UnimplementedRpcDriverMessageServer must be embedded to have forward compatible implementations.
-type UnimplementedRpcDriverMessageServer struct {
+// UnimplementedRpcCustomMqttMessageServer must be embedded to have forward compatible implementations.
+type UnimplementedRpcCustomMqttMessageServer struct {
 }
 
-func (UnimplementedRpcDriverMessageServer) PlatformCustomPublish(context.Context, *PlatformCustomPublishRequest) (*common.CommonResponse, error) {
+func (UnimplementedRpcCustomMqttMessageServer) PlatformCustomPublish(context.Context, *PlatformCustomPublishRequest) (*common.CommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PlatformCustomPublish not implemented")
 }
-func (UnimplementedRpcDriverMessageServer) PlatformCustomSubscribe(context.Context, *PlatformCustomSubscribeRequest) (*common.CommonResponse, error) {
+func (UnimplementedRpcCustomMqttMessageServer) PlatformCustomSubscribe(context.Context, *PlatformCustomSubscribeRequest) (*common.CommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PlatformCustomSubscribe not implemented")
 }
-func (UnimplementedRpcDriverMessageServer) PlatformCustomUnSubscribe(context.Context, *PlatformCustomUnSubscribeRequest) (*common.CommonResponse, error) {
+func (UnimplementedRpcCustomMqttMessageServer) PlatformCustomUnSubscribe(context.Context, *PlatformCustomUnSubscribeRequest) (*common.CommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PlatformCustomUnSubscribe not implemented")
 }
-func (UnimplementedRpcDriverMessageServer) mustEmbedUnimplementedRpcDriverMessageServer() {}
+func (UnimplementedRpcCustomMqttMessageServer) mustEmbedUnimplementedRpcCustomMqttMessageServer() {}
 
-// UnsafeRpcDriverMessageServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to RpcDriverMessageServer will
+// UnsafeRpcCustomMqttMessageServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to RpcCustomMqttMessageServer will
 // result in compilation errors.
-type UnsafeRpcDriverMessageServer interface {
-	mustEmbedUnimplementedRpcDriverMessageServer()
+type UnsafeRpcCustomMqttMessageServer interface {
+	mustEmbedUnimplementedRpcCustomMqttMessageServer()
 }
 
-func RegisterRpcDriverMessageServer(s grpc.ServiceRegistrar, srv RpcDriverMessageServer) {
-	s.RegisterService(&RpcDriverMessage_ServiceDesc, srv)
+func RegisterRpcCustomMqttMessageServer(s grpc.ServiceRegistrar, srv RpcCustomMqttMessageServer) {
+	s.RegisterService(&RpcCustomMqttMessage_ServiceDesc, srv)
 }
 
-func _RpcDriverMessage_PlatformCustomPublish_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RpcCustomMqttMessage_PlatformCustomPublish_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PlatformCustomPublishRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RpcDriverMessageServer).PlatformCustomPublish(ctx, in)
+		return srv.(RpcCustomMqttMessageServer).PlatformCustomPublish(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/platform.RpcDriverMessage/PlatformCustomPublish",
+		FullMethod: "/platform.RpcCustomMqttMessage/PlatformCustomPublish",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RpcDriverMessageServer).PlatformCustomPublish(ctx, req.(*PlatformCustomPublishRequest))
+		return srv.(RpcCustomMqttMessageServer).PlatformCustomPublish(ctx, req.(*PlatformCustomPublishRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RpcDriverMessage_PlatformCustomSubscribe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RpcCustomMqttMessage_PlatformCustomSubscribe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PlatformCustomSubscribeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RpcDriverMessageServer).PlatformCustomSubscribe(ctx, in)
+		return srv.(RpcCustomMqttMessageServer).PlatformCustomSubscribe(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/platform.RpcDriverMessage/PlatformCustomSubscribe",
+		FullMethod: "/platform.RpcCustomMqttMessage/PlatformCustomSubscribe",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RpcDriverMessageServer).PlatformCustomSubscribe(ctx, req.(*PlatformCustomSubscribeRequest))
+		return srv.(RpcCustomMqttMessageServer).PlatformCustomSubscribe(ctx, req.(*PlatformCustomSubscribeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RpcDriverMessage_PlatformCustomUnSubscribe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RpcCustomMqttMessage_PlatformCustomUnSubscribe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PlatformCustomUnSubscribeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RpcDriverMessageServer).PlatformCustomUnSubscribe(ctx, in)
+		return srv.(RpcCustomMqttMessageServer).PlatformCustomUnSubscribe(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/platform.RpcDriverMessage/PlatformCustomUnSubscribe",
+		FullMethod: "/platform.RpcCustomMqttMessage/PlatformCustomUnSubscribe",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RpcDriverMessageServer).PlatformCustomUnSubscribe(ctx, req.(*PlatformCustomUnSubscribeRequest))
+		return srv.(RpcCustomMqttMessageServer).PlatformCustomUnSubscribe(ctx, req.(*PlatformCustomUnSubscribeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// RpcDriverMessage_ServiceDesc is the grpc.ServiceDesc for RpcDriverMessage service.
+// RpcCustomMqttMessage_ServiceDesc is the grpc.ServiceDesc for RpcCustomMqttMessage service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var RpcDriverMessage_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "platform.RpcDriverMessage",
-	HandlerType: (*RpcDriverMessageServer)(nil),
+var RpcCustomMqttMessage_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "platform.RpcCustomMqttMessage",
+	HandlerType: (*RpcCustomMqttMessageServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "PlatformCustomPublish",
-			Handler:    _RpcDriverMessage_PlatformCustomPublish_Handler,
+			Handler:    _RpcCustomMqttMessage_PlatformCustomPublish_Handler,
 		},
 		{
 			MethodName: "PlatformCustomSubscribe",
-			Handler:    _RpcDriverMessage_PlatformCustomSubscribe_Handler,
+			Handler:    _RpcCustomMqttMessage_PlatformCustomSubscribe_Handler,
 		},
 		{
 			MethodName: "PlatformCustomUnSubscribe",
-			Handler:    _RpcDriverMessage_PlatformCustomUnSubscribe_Handler,
+			Handler:    _RpcCustomMqttMessage_PlatformCustomUnSubscribe_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
