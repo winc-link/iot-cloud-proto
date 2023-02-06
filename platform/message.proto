@@ -12,13 +12,18 @@ enum messageType {
   Message = 3;//消息下发
   PropertyGet = 4;//属性查询
   Event = 5;//事件下发
+  CustomMqtt = 6;//平台自定义mqtt消息下发
   Other = 9;//其他消息类型，如ota升级、日志上报、远程登入等等这这些消息不经过包装直接透传。
 }
 
 message PlatformMessageRequest {
   message MessageInfo {
-    string topic = 1;
-    string message = 2;
+    bool duplicate = 1;
+    int32 qos = 2;
+    bool retained = 3;
+    string topic = 4;
+    uint32 messageID = 5;
+    string payload = 6;
   }
   common.IotPlatform IotPlatformName = 1;
   messageType messageType = 2;
@@ -29,5 +34,35 @@ message PlatformMessageRequest {
 
 service RpcIotPlatformMessage {
   // 云平台给网关发送消息入口
-  rpc IotPlatformMessage (PlatformMessageRequest) returns (common.CommonResponse) {}
+  rpc IotPlatformMessageToEdge (PlatformMessageRequest) returns (common.CommonResponse) {}
+}
+
+
+message PlatformCustomPublishRequest {
+  string deviceId = 1;
+  string topic = 2;
+  int32 qos = 3;
+  bool retained = 4;
+  string payload = 5;
+}
+
+
+message PlatformCustomUnSubscribeRequest {
+  string deviceId = 1;
+  repeated string topics = 2;
+}
+
+message PlatformCustomSubscribeRequest {
+  string topic = 1;
+  int32 qos = 2;
+}
+
+// 驱动向云平台发送消息入口
+service RpcDriverMessage {
+  // 平台自定义消息推Public
+  rpc PlatformCustomPublish(PlatformCustomPublishRequest) returns (common.CommonResponse) {}
+  // 平台自定义消息推Subscribe
+  rpc PlatformCustomSubscribe(PlatformCustomSubscribeRequest) returns (common.CommonResponse) {}
+  // 平台自定义消息UnSubscribe
+  rpc PlatformCustomUnSubscribe(PlatformCustomUnSubscribeRequest) returns (common.CommonResponse) {}
 }

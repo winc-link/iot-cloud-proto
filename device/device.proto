@@ -128,18 +128,6 @@ message QueryDeviceListResponse {
   string errorMessage = 5;
 }
 
-message PlatformCustomPublishRequest {
-  string deviceId = 1;
-  string topic = 2;
-  int32 qos = 3;
-  bool retained = 4;
-  string payload = 5;
-}
-
-
-message PlatformCustomUnSubscribeRequest {
-  repeated string  topics = 1;
-}
 
 service RpcDevice {
   //设备连接云服务
@@ -156,8 +144,4 @@ service RpcDevice {
   rpc RegisterDevice (RegisterDeviceRequest) returns (RegisterDeviceResponse) {}
   // 删除设备
 //  rpc RegisterDevice (RegisterDeviceRequest) returns (RegisterDeviceResponse) {}
-  // 平台自定义消息推Public
-  rpc PlatformCustomPublish(PlatformCustomPublishRequest) returns (common.CommonResponse) {}
-  // 平台自定义消息UnSubscribe
-  rpc PlatformCustomUnSubscribe(PlatformCustomUnSubscribeRequest) returns (common.CommonResponse) {}
 }

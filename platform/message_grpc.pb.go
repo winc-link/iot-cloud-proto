@@ -24,7 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RpcIotPlatformMessageClient interface {
 	// 云平台给网关发送消息入口
-	IotPlatformMessage(ctx context.Context, in *PlatformMessageRequest, opts ...grpc.CallOption) (*common.CommonResponse, error)
+	IotPlatformMessageToEdge(ctx context.Context, in *PlatformMessageRequest, opts ...grpc.CallOption) (*common.CommonResponse, error)
 }
 
 type rpcIotPlatformMessageClient struct {
@@ -35,9 +35,9 @@ func NewRpcIotPlatformMessageClient(cc grpc.ClientConnInterface) RpcIotPlatformM
 	return &rpcIotPlatformMessageClient{cc}
 }
 
-func (c *rpcIotPlatformMessageClient) IotPlatformMessage(ctx context.Context, in *PlatformMessageRequest, opts ...grpc.CallOption) (*common.CommonResponse, error) {
+func (c *rpcIotPlatformMessageClient) IotPlatformMessageToEdge(ctx context.Context, in *PlatformMessageRequest, opts ...grpc.CallOption) (*common.CommonResponse, error) {
 	out := new(common.CommonResponse)
-	err := c.cc.Invoke(ctx, "/platform.RpcIotPlatformMessage/IotPlatformMessage", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/platform.RpcIotPlatformMessage/IotPlatformMessageToEdge", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +49,7 @@ func (c *rpcIotPlatformMessageClient) IotPlatformMessage(ctx context.Context, in
 // for forward compatibility
 type RpcIotPlatformMessageServer interface {
 	// 云平台给网关发送消息入口
-	IotPlatformMessage(context.Context, *PlatformMessageRequest) (*common.CommonResponse, error)
+	IotPlatformMessageToEdge(context.Context, *PlatformMessageRequest) (*common.CommonResponse, error)
 	mustEmbedUnimplementedRpcIotPlatformMessageServer()
 }
 
@@ -57,8 +57,8 @@ type RpcIotPlatformMessageServer interface {
 type UnimplementedRpcIotPlatformMessageServer struct {
 }
 
-func (UnimplementedRpcIotPlatformMessageServer) IotPlatformMessage(context.Context, *PlatformMessageRequest) (*common.CommonResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method IotPlatformMessage not implemented")
+func (UnimplementedRpcIotPlatformMessageServer) IotPlatformMessageToEdge(context.Context, *PlatformMessageRequest) (*common.CommonResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IotPlatformMessageToEdge not implemented")
 }
 func (UnimplementedRpcIotPlatformMessageServer) mustEmbedUnimplementedRpcIotPlatformMessageServer() {}
 
@@ -73,20 +73,20 @@ func RegisterRpcIotPlatformMessageServer(s grpc.ServiceRegistrar, srv RpcIotPlat
 	s.RegisterService(&RpcIotPlatformMessage_ServiceDesc, srv)
 }
 
-func _RpcIotPlatformMessage_IotPlatformMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RpcIotPlatformMessage_IotPlatformMessageToEdge_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PlatformMessageRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RpcIotPlatformMessageServer).IotPlatformMessage(ctx, in)
+		return srv.(RpcIotPlatformMessageServer).IotPlatformMessageToEdge(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/platform.RpcIotPlatformMessage/IotPlatformMessage",
+		FullMethod: "/platform.RpcIotPlatformMessage/IotPlatformMessageToEdge",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RpcIotPlatformMessageServer).IotPlatformMessage(ctx, req.(*PlatformMessageRequest))
+		return srv.(RpcIotPlatformMessageServer).IotPlatformMessageToEdge(ctx, req.(*PlatformMessageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -99,8 +99,172 @@ var RpcIotPlatformMessage_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*RpcIotPlatformMessageServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "IotPlatformMessage",
-			Handler:    _RpcIotPlatformMessage_IotPlatformMessage_Handler,
+			MethodName: "IotPlatformMessageToEdge",
+			Handler:    _RpcIotPlatformMessage_IotPlatformMessageToEdge_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "platform/message.proto",
+}
+
+// RpcDriverMessageClient is the client API for RpcDriverMessage service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type RpcDriverMessageClient interface {
+	// 平台自定义消息推Public
+	PlatformCustomPublish(ctx context.Context, in *PlatformCustomPublishRequest, opts ...grpc.CallOption) (*common.CommonResponse, error)
+	// 平台自定义消息推Subscribe
+	PlatformCustomSubscribe(ctx context.Context, in *PlatformCustomSubscribeRequest, opts ...grpc.CallOption) (*common.CommonResponse, error)
+	// 平台自定义消息UnSubscribe
+	PlatformCustomUnSubscribe(ctx context.Context, in *PlatformCustomUnSubscribeRequest, opts ...grpc.CallOption) (*common.CommonResponse, error)
+}
+
+type rpcDriverMessageClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewRpcDriverMessageClient(cc grpc.ClientConnInterface) RpcDriverMessageClient {
+	return &rpcDriverMessageClient{cc}
+}
+
+func (c *rpcDriverMessageClient) PlatformCustomPublish(ctx context.Context, in *PlatformCustomPublishRequest, opts ...grpc.CallOption) (*common.CommonResponse, error) {
+	out := new(common.CommonResponse)
+	err := c.cc.Invoke(ctx, "/platform.RpcDriverMessage/PlatformCustomPublish", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *rpcDriverMessageClient) PlatformCustomSubscribe(ctx context.Context, in *PlatformCustomSubscribeRequest, opts ...grpc.CallOption) (*common.CommonResponse, error) {
+	out := new(common.CommonResponse)
+	err := c.cc.Invoke(ctx, "/platform.RpcDriverMessage/PlatformCustomSubscribe", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *rpcDriverMessageClient) PlatformCustomUnSubscribe(ctx context.Context, in *PlatformCustomUnSubscribeRequest, opts ...grpc.CallOption) (*common.CommonResponse, error) {
+	out := new(common.CommonResponse)
+	err := c.cc.Invoke(ctx, "/platform.RpcDriverMessage/PlatformCustomUnSubscribe", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// RpcDriverMessageServer is the server API for RpcDriverMessage service.
+// All implementations must embed UnimplementedRpcDriverMessageServer
+// for forward compatibility
+type RpcDriverMessageServer interface {
+	// 平台自定义消息推Public
+	PlatformCustomPublish(context.Context, *PlatformCustomPublishRequest) (*common.CommonResponse, error)
+	// 平台自定义消息推Subscribe
+	PlatformCustomSubscribe(context.Context, *PlatformCustomSubscribeRequest) (*common.CommonResponse, error)
+	// 平台自定义消息UnSubscribe
+	PlatformCustomUnSubscribe(context.Context, *PlatformCustomUnSubscribeRequest) (*common.CommonResponse, error)
+	mustEmbedUnimplementedRpcDriverMessageServer()
+}
+
+// UnimplementedRpcDriverMessageServer must be embedded to have forward compatible implementations.
+type UnimplementedRpcDriverMessageServer struct {
+}
+
+func (UnimplementedRpcDriverMessageServer) PlatformCustomPublish(context.Context, *PlatformCustomPublishRequest) (*common.CommonResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PlatformCustomPublish not implemented")
+}
+func (UnimplementedRpcDriverMessageServer) PlatformCustomSubscribe(context.Context, *PlatformCustomSubscribeRequest) (*common.CommonResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PlatformCustomSubscribe not implemented")
+}
+func (UnimplementedRpcDriverMessageServer) PlatformCustomUnSubscribe(context.Context, *PlatformCustomUnSubscribeRequest) (*common.CommonResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PlatformCustomUnSubscribe not implemented")
+}
+func (UnimplementedRpcDriverMessageServer) mustEmbedUnimplementedRpcDriverMessageServer() {}
+
+// UnsafeRpcDriverMessageServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to RpcDriverMessageServer will
+// result in compilation errors.
+type UnsafeRpcDriverMessageServer interface {
+	mustEmbedUnimplementedRpcDriverMessageServer()
+}
+
+func RegisterRpcDriverMessageServer(s grpc.ServiceRegistrar, srv RpcDriverMessageServer) {
+	s.RegisterService(&RpcDriverMessage_ServiceDesc, srv)
+}
+
+func _RpcDriverMessage_PlatformCustomPublish_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PlatformCustomPublishRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RpcDriverMessageServer).PlatformCustomPublish(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/platform.RpcDriverMessage/PlatformCustomPublish",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RpcDriverMessageServer).PlatformCustomPublish(ctx, req.(*PlatformCustomPublishRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RpcDriverMessage_PlatformCustomSubscribe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PlatformCustomSubscribeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RpcDriverMessageServer).PlatformCustomSubscribe(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/platform.RpcDriverMessage/PlatformCustomSubscribe",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RpcDriverMessageServer).PlatformCustomSubscribe(ctx, req.(*PlatformCustomSubscribeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RpcDriverMessage_PlatformCustomUnSubscribe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PlatformCustomUnSubscribeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RpcDriverMessageServer).PlatformCustomUnSubscribe(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/platform.RpcDriverMessage/PlatformCustomUnSubscribe",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RpcDriverMessageServer).PlatformCustomUnSubscribe(ctx, req.(*PlatformCustomUnSubscribeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// RpcDriverMessage_ServiceDesc is the grpc.ServiceDesc for RpcDriverMessage service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var RpcDriverMessage_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "platform.RpcDriverMessage",
+	HandlerType: (*RpcDriverMessageServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "PlatformCustomPublish",
+			Handler:    _RpcDriverMessage_PlatformCustomPublish_Handler,
+		},
+		{
+			MethodName: "PlatformCustomSubscribe",
+			Handler:    _RpcDriverMessage_PlatformCustomSubscribe_Handler,
+		},
+		{
+			MethodName: "PlatformCustomUnSubscribe",
+			Handler:    _RpcDriverMessage_PlatformCustomUnSubscribe_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
