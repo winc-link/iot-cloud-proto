@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package desire;
+option go_package = "github.com/winc-link/iot-cloud-proto/desire";
+import "common/common.proto";
+
+
+message DeviceDesireGetRequest {
+  string data = 1;
+  string deviceId = 2;
+  string productId = 3;
+}
+
+message DeviceDesireDel {
+  string data = 1;
+  string deviceId = 2;
+  string productId = 3;
+}
+
+service RpcDesire {
+  // 设备期望属性获取
+  rpc DeviceDesireGet(DeviceDesireGetRequest) returns (common.CommonResponse) {}
+  // 设备期望属性删除
+  rpc DeviceDesireDel(DeviceDesireGetRequest) returns (common.CommonResponse) {}
+}

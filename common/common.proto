@@ -42,6 +42,7 @@ message CommonResponse {
   string errorMessage = 2;
   string Code = 3;
   bool Success = 4;
+  string Data = 5;
 }
 
 // SDK使用

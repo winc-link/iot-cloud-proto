@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package log;
+option go_package = "github.com/winc-link/iot-cloud-proto/log";
+import "common/common.proto";
+
+
+message DeviceLogReportRequest {
+  string data = 1;
+  string deviceId = 2;
+  string productId = 3;
+}
+
+service RpcDesire {
+  // 设备期望属性获取
+  rpc DeviceLogReport(DeviceLogReportRequest) returns (common.CommonResponse) {}
+}
