@@ -26,7 +26,7 @@ type RpcDesireClient interface {
 	// 设备期望属性获取
 	DeviceDesireGet(ctx context.Context, in *DeviceDesireGetRequest, opts ...grpc.CallOption) (*common.CommonResponse, error)
 	// 设备期望属性删除
-	DeviceDesireDel(ctx context.Context, in *DeviceDesireGetRequest, opts ...grpc.CallOption) (*common.CommonResponse, error)
+	DeviceDesireDel(ctx context.Context, in *DeviceDesireDeleteRequest, opts ...grpc.CallOption) (*common.CommonResponse, error)
 }
 
 type rpcDesireClient struct {
@@ -46,7 +46,7 @@ func (c *rpcDesireClient) DeviceDesireGet(ctx context.Context, in *DeviceDesireG
 	return out, nil
 }
 
-func (c *rpcDesireClient) DeviceDesireDel(ctx context.Context, in *DeviceDesireGetRequest, opts ...grpc.CallOption) (*common.CommonResponse, error) {
+func (c *rpcDesireClient) DeviceDesireDel(ctx context.Context, in *DeviceDesireDeleteRequest, opts ...grpc.CallOption) (*common.CommonResponse, error) {
 	out := new(common.CommonResponse)
 	err := c.cc.Invoke(ctx, "/desire.RpcDesire/DeviceDesireDel", in, out, opts...)
 	if err != nil {
@@ -62,7 +62,7 @@ type RpcDesireServer interface {
 	// 设备期望属性获取
 	DeviceDesireGet(context.Context, *DeviceDesireGetRequest) (*common.CommonResponse, error)
 	// 设备期望属性删除
-	DeviceDesireDel(context.Context, *DeviceDesireGetRequest) (*common.CommonResponse, error)
+	DeviceDesireDel(context.Context, *DeviceDesireDeleteRequest) (*common.CommonResponse, error)
 	mustEmbedUnimplementedRpcDesireServer()
 }
 
@@ -73,7 +73,7 @@ type UnimplementedRpcDesireServer struct {
 func (UnimplementedRpcDesireServer) DeviceDesireGet(context.Context, *DeviceDesireGetRequest) (*common.CommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeviceDesireGet not implemented")
 }
-func (UnimplementedRpcDesireServer) DeviceDesireDel(context.Context, *DeviceDesireGetRequest) (*common.CommonResponse, error) {
+func (UnimplementedRpcDesireServer) DeviceDesireDel(context.Context, *DeviceDesireDeleteRequest) (*common.CommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeviceDesireDel not implemented")
 }
 func (UnimplementedRpcDesireServer) mustEmbedUnimplementedRpcDesireServer() {}
@@ -108,7 +108,7 @@ func _RpcDesire_DeviceDesireGet_Handler(srv interface{}, ctx context.Context, de
 }
 
 func _RpcDesire_DeviceDesireDel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeviceDesireGetRequest)
+	in := new(DeviceDesireDeleteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -120,7 +120,7 @@ func _RpcDesire_DeviceDesireDel_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: "/desire.RpcDesire/DeviceDesireDel",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RpcDesireServer).DeviceDesireDel(ctx, req.(*DeviceDesireGetRequest))
+		return srv.(RpcDesireServer).DeviceDesireDel(ctx, req.(*DeviceDesireDeleteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
